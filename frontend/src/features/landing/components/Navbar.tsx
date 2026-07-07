@@ -1,10 +1,38 @@
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { cn } from '@/utils/cn'
 import { navLinks } from '@/features/landing/data/landing.data'
 
 export function Navbar() {
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  useEffect(() => {
+    const updateScrolledState = () => {
+      const nextIsScrolled = window.scrollY > 12
+      setIsScrolled((currentIsScrolled) =>
+        currentIsScrolled === nextIsScrolled
+          ? currentIsScrolled
+          : nextIsScrolled,
+      )
+    }
+
+    updateScrolledState()
+    window.addEventListener('scroll', updateScrolledState, { passive: true })
+
+    return () => {
+      window.removeEventListener('scroll', updateScrolledState)
+    }
+  }, [])
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-gray-100/60">
+    <nav
+      className={cn(
+        'fixed left-0 right-0 top-0 z-50 border-b transition-all duration-500 ease-out',
+        isScrolled
+          ? 'border-[#D7CEF9]/70 bg-[#F0EBFF]/90 shadow-[0_12px_32px_rgba(110,65,226,0.14)] backdrop-blur-md'
+          : 'glass border-gray-100/60',
+      )}
+    >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-3 sm:py-4 lg:px-8">
         <motion.a
           href="/"

@@ -14,12 +14,12 @@ export function Navbar() {
           transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
           className="flex min-w-max items-center gap-2 text-xl font-extrabold tracking-tight text-[#111827] sm:gap-3 sm:text-2xl"
         >
-          <span className="flex h-9 w-9 shrink-0 overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-gray-100 sm:h-10 sm:w-10">
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white p-1 shadow-sm ring-1 ring-gray-100 sm:h-12 sm:w-12">
             <img
               src="/logo.png"
               alt=""
               aria-hidden="true"
-              className="h-full w-full origin-[50%_42%] scale-[2.7] object-cover"
+              className="h-full w-full object-contain"
             />
           </span>
           EventGarde

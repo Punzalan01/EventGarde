@@ -5,6 +5,7 @@ import {
   useSpring,
   useTransform,
   type MotionValue,
+  type Variants,
 } from 'framer-motion'
 
 export interface HeroParallaxProduct {
@@ -30,6 +31,22 @@ export interface HeroParallaxProps {
 }
 
 const springConfig = { stiffness: 300, damping: 30, bounce: 100 }
+
+const heroTextMotion: Variants = {
+  hidden: {
+    opacity: 0,
+    x: -56,
+  },
+  visible: (delay = 0) => ({
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.85,
+      ease: [0.22, 1, 0.36, 1],
+      delay,
+    },
+  }),
+}
 
 export function HeroParallax({
   products,
@@ -144,13 +161,27 @@ export function Header({
           {eyebrow}
         </span>
       ) : null}
-      <h1 className="max-w-5xl text-4xl font-extrabold leading-[1.05] tracking-tight text-[#111827] sm:text-5xl md:text-7xl">
+      <motion.h1
+        variants={heroTextMotion}
+        custom={0}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.5 }}
+        className="max-w-5xl text-4xl font-extrabold leading-[1.05] tracking-tight text-[#111827] sm:text-5xl md:text-7xl"
+      >
         {title}{' '}
         <span className="text-[#6E41E2]">{highlightedTitle}</span>
-      </h1>
-      <p className="mt-7 max-w-2xl text-base leading-8 text-[#4B5563] md:text-xl">
+      </motion.h1>
+      <motion.p
+        variants={heroTextMotion}
+        custom={0.12}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.5 }}
+        className="mt-7 max-w-2xl text-base leading-8 text-[#4B5563] md:text-xl"
+      >
         {description}
-      </p>
+      </motion.p>
       <div className="mt-8 flex flex-col gap-3 sm:flex-row">
         <a
           href={primaryAction?.href}

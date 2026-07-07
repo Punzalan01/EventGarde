@@ -66,8 +66,15 @@ const attendeeSlides = [
 
 export function AttendeeSection() {
   return (
-    <section className="bg-[linear-gradient(135deg,#ffffff_0%,#fff7ed_42%,#f0ebff_100%)] py-20 text-[#3d3929] lg:py-24">
-      <HoverSlider className="mx-auto max-w-7xl px-6 lg:px-8">
+    <section className="relative overflow-hidden bg-white py-20 text-[#3d3929] lg:py-24">
+      <img
+        src="https://rsvpify.com/wp-content/uploads/2025/05/Hero-Section.png"
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover opacity-20"
+      />
+      <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.94)_0%,rgba(255,247,237,0.88)_45%,rgba(240,235,255,0.9)_100%)]" />
+      <HoverSlider className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div
           variants={fadeUp}
           initial="hidden"

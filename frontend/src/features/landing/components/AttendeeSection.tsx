@@ -64,10 +64,75 @@ const attendeeSlides = [
   },
 ]
 
+function AttendeeAnimatedBackground() {
+  return (
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+    >
+      <motion.div
+        className="absolute inset-0 opacity-[0.16]"
+        style={{
+          backgroundImage:
+            'linear-gradient(115deg, rgba(110,65,226,0.18) 1px, transparent 1px), linear-gradient(25deg, rgba(184,115,46,0.12) 1px, transparent 1px)',
+          backgroundSize: '88px 88px, 132px 132px',
+        }}
+        animate={{
+          backgroundPosition: ['0px 0px, 0px 0px', '88px 88px, -132px 132px'],
+        }}
+        transition={{
+          duration: 34,
+          ease: 'linear',
+          repeat: Infinity,
+        }}
+      />
+      <motion.svg
+        className="absolute left-1/2 top-1/2 h-[58rem] w-[92rem] -translate-x-1/2 -translate-y-1/2 opacity-25"
+        viewBox="0 0 1472 928"
+        fill="none"
+      >
+        <motion.path
+          d="M-48 194C144 92 296 88 468 180C700 304 816 306 1048 184C1194 108 1330 100 1518 168"
+          stroke="#6E41E2"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeDasharray="18 24"
+          animate={{ strokeDashoffset: [0, -168] }}
+          transition={{ duration: 22, ease: 'linear', repeat: Infinity }}
+        />
+        <motion.path
+          d="M-72 610C154 468 366 470 570 604C778 742 982 744 1212 590C1328 512 1438 484 1548 510"
+          stroke="#3159B7"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeDasharray="12 28"
+          animate={{ strokeDashoffset: [0, 160] }}
+          transition={{ duration: 26, ease: 'linear', repeat: Infinity }}
+        />
+        <motion.path
+          d="M96 818C312 668 522 666 714 792C930 934 1120 928 1340 752"
+          stroke="#B8732E"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeDasharray="10 22"
+          animate={{ strokeDashoffset: [0, -142] }}
+          transition={{ duration: 30, ease: 'linear', repeat: Infinity }}
+        />
+      </motion.svg>
+      <motion.div
+        className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#faf9f5] to-transparent"
+        animate={{ opacity: [0.9, 0.65, 0.9] }}
+        transition={{ duration: 8, ease: 'easeInOut', repeat: Infinity }}
+      />
+    </div>
+  )
+}
+
 export function AttendeeSection() {
   return (
-    <section className="bg-[#faf9f5] py-20 text-[#3d3929] lg:py-24">
-      <HoverSlider className="mx-auto max-w-7xl px-6 lg:px-8">
+    <section className="relative isolate overflow-hidden bg-[#faf9f5] py-20 text-[#3d3929] lg:py-24">
+      <AttendeeAnimatedBackground />
+      <HoverSlider className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div
           variants={fadeUp}
           initial="hidden"

@@ -189,13 +189,14 @@ export function Header({
       <div className="mt-8 flex flex-col gap-3 sm:flex-row">
         <a
           href={primaryAction?.href}
-          className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#6E41E2] px-7 py-3 text-base font-semibold text-white shadow-[0_12px_28px_rgba(110,65,226,0.24)] transition hover:bg-[#5833B5]"
+          className="landing-shine-button inline-flex min-h-12 items-center justify-center rounded-full bg-[#6E41E2] px-7 py-3 text-base font-semibold text-white shadow-[0_12px_28px_rgba(110,65,226,0.24)] transition hover:bg-[#5833B5]"
         >
           {primaryAction?.label}
         </a>
         <a
           href={secondaryAction?.href}
-          className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#D7CEF9] bg-white px-7 py-3 text-base font-semibold text-[#5833B5] transition hover:bg-[#F0EBFF]"
+          data-shine="purple"
+          className="landing-shine-button inline-flex min-h-12 items-center justify-center rounded-full border border-[#D7CEF9] bg-white px-7 py-3 text-base font-semibold text-[#5833B5] transition hover:bg-[#F0EBFF]"
         >
           {secondaryAction?.label}
         </a>

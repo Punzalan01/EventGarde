@@ -1,6 +1,8 @@
-import { motion } from 'framer-motion'
+import { motion, type Variants } from 'framer-motion'
 import { usePrefersReducedMotion } from '@/shared/hooks/usePrefersReducedMotion'
 import { cn } from '@/utils/cn'
+
+const premiumEase: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -55,30 +57,120 @@ const organizerPhotoColumns = [
   organizerPhotoCards.slice(2),
 ]
 
-function createPhotoCardReveal(shouldReduceMotion: boolean) {
+function createPhotoGridReveal(shouldReduceMotion: boolean): Variants {
   return {
-    hidden: {
-      opacity: 0,
-      scale: shouldReduceMotion ? 1 : 0.95,
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: shouldReduceMotion ? 0 : 0.15,
+      },
     },
-    visible: (index: number) => ({
+  }
+}
+
+function createPhotoCardReveal(shouldReduceMotion: boolean): Variants {
+  return {
+    hidden: (direction = 1) => ({
+      opacity: 0,
+      x: shouldReduceMotion ? 0 : direction * 36,
+      y: shouldReduceMotion ? 0 : 44,
+      scale: shouldReduceMotion ? 1 : 0.95,
+    }),
+    visible: {
       opacity: 1,
+      x: 0,
+      y: 0,
       scale: 1,
       transition: {
-        duration: shouldReduceMotion ? 0.01 : 0.55,
-        delay: shouldReduceMotion ? 0 : index * 0.12,
-        ease: [0.16, 1, 0.3, 1],
+        duration: shouldReduceMotion ? 0.01 : 0.6,
+        ease: premiumEase,
       },
-    }),
+    },
+  }
+}
+
+function createCardHoverVariants(shouldReduceMotion: boolean): Variants {
+  return {
+    rest: {
+      y: 0,
+      scale: 1,
+      boxShadow: '0 28px 70px -30px rgba(17,24,39,0.55)',
+      transition: { duration: 0.4, ease: 'easeOut' },
+    },
+    hover: {
+      y: shouldReduceMotion ? 0 : -10,
+      scale: shouldReduceMotion ? 1 : 1.04,
+      boxShadow:
+        '0 30px 55px -24px rgba(110,65,226,0.52), 0 20px 30px rgba(0,0,0,0.18)',
+      transition: { duration: 0.4, ease: 'easeOut' },
+    },
+  }
+}
+
+function createImageHoverVariants(shouldReduceMotion: boolean): Variants {
+  return {
+    rest: {
+      scale: 1,
+      transition: { duration: 0.4, ease: 'easeOut' },
+    },
+    hover: {
+      scale: shouldReduceMotion ? 1 : 1.14,
+      transition: { duration: 0.4, ease: 'easeOut' },
+    },
+  }
+}
+
+function createPurpleGlowVariants(): Variants {
+  return {
+    rest: {
+      opacity: 0,
+      transition: { duration: 0.4, ease: 'easeOut' },
+    },
+    hover: {
+      opacity: 0.55,
+      transition: { duration: 0.4, ease: 'easeOut' },
+    },
+  }
+}
+
+function createOverlayHoverVariants(): Variants {
+  return {
+    rest: {
+      opacity: 0.72,
+      transition: { duration: 0.4, ease: 'easeOut' },
+    },
+    hover: {
+      opacity: 0.82,
+      transition: { duration: 0.4, ease: 'easeOut' },
+    },
+  }
+}
+
+function createTextHoverVariants(shouldReduceMotion: boolean): Variants {
+  return {
+    rest: {
+      y: 0,
+      transition: { duration: 0.4, ease: 'easeOut' },
+    },
+    hover: {
+      y: shouldReduceMotion ? 0 : -6,
+      transition: { duration: 0.4, ease: 'easeOut' },
+    },
   }
 }
 
 export function OrganizerSection() {
   const shouldReduceMotion = usePrefersReducedMotion()
+  const photoGridReveal = createPhotoGridReveal(Boolean(shouldReduceMotion))
   const photoCardReveal = createPhotoCardReveal(Boolean(shouldReduceMotion))
+  const cardHoverVariants = createCardHoverVariants(Boolean(shouldReduceMotion))
+  const imageHoverVariants = createImageHoverVariants(Boolean(shouldReduceMotion))
+  const purpleGlowVariants = createPurpleGlowVariants()
+  const overlayHoverVariants = createOverlayHoverVariants()
+  const textHoverVariants = createTextHoverVariants(Boolean(shouldReduceMotion))
 
   return (
-    <section className="landing-mesh-section py-20 lg:py-24">
+    <section className="organizer-gradient-section py-20 lg:py-24">
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div
           variants={fadeUp}
@@ -99,57 +191,72 @@ export function OrganizerSection() {
           <div className="mt-7 flex justify-center">
             <a
               href="/pricing"
-              className="inline-flex items-center justify-center rounded-full bg-[#6E41E2] px-8 py-3.5 text-base font-semibold text-white shadow-[0_18px_38px_rgba(110,65,226,0.26)] transition-all hover:bg-[#5833B5] hover:shadow-[0_22px_46px_rgba(110,65,226,0.32)]"
+              className="landing-shine-button inline-flex items-center justify-center rounded-full bg-[#6E41E2] px-8 py-3.5 text-base font-semibold text-white shadow-[0_18px_38px_rgba(110,65,226,0.26)] transition-all hover:bg-[#5833B5] hover:shadow-[0_22px_46px_rgba(110,65,226,0.32)]"
             >
               See Organizer Pricing
             </a>
           </div>
         </motion.div>
 
-        <div className="mt-12 grid gap-4 lg:grid-cols-[0.98fr_1.02fr] lg:gap-5">
+        <motion.div
+          variants={photoGridReveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          className="mt-12 grid gap-4 lg:grid-cols-[0.98fr_1.02fr] lg:gap-5"
+        >
           {organizerPhotoColumns.map((column, columnIndex) => (
             <div
               key={columnIndex}
               className={cn('grid gap-4 lg:gap-5', columnIndex === 1 && 'lg:pt-10')}
             >
-              {column.map((card, cardIndex) => {
-                const revealIndex = columnIndex * 2 + cardIndex
-
-                return (
-                  <motion.article
-                    key={card.title}
-                    custom={revealIndex}
-                    variants={photoCardReveal}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, amount: 0.24 }}
-                    className={cn(
-                      'group relative overflow-hidden rounded-xl bg-[#111827] shadow-[0_28px_70px_-30px_rgba(17,24,39,0.55)]',
-                      card.className,
-                    )}
+              {column.map((card) => (
+                <motion.article
+                  key={card.title}
+                  custom={columnIndex === 0 ? -1 : 1}
+                  variants={photoCardReveal}
+                  className={cn('relative', card.className)}
+                >
+                  <motion.div
+                    variants={cardHoverVariants}
+                    initial="rest"
+                    animate="rest"
+                    whileHover={shouldReduceMotion ? undefined : 'hover'}
+                    className="vendor-gradient-border will-change-transform-filter absolute inset-0 overflow-hidden rounded-xl bg-[#111827] ring-1 ring-white/10"
                   >
-                    <img
+                    <motion.img
                       src={card.imageUrl}
                       alt={card.imageAlt}
-                      className="absolute inset-0 h-full w-full object-cover transition duration-500 ease-out group-hover:scale-[1.06] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+                      variants={imageHoverVariants}
+                      className="absolute inset-0 h-full w-full origin-center object-cover"
                       loading="lazy"
                       decoding="async"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/50 to-black/20" />
-                    <div className="absolute inset-x-0 bottom-0 p-5 transition duration-500 ease-out group-hover:-translate-y-1.5 motion-reduce:transition-none motion-reduce:group-hover:translate-y-0 sm:p-6">
+                    <motion.div
+                      variants={purpleGlowVariants}
+                      className="absolute inset-0 bg-gradient-to-br from-[#6E41E2]/40 via-transparent to-[#4C2BA8]/70 mix-blend-screen"
+                    />
+                    <motion.div
+                      variants={overlayHoverVariants}
+                      className="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-black/20"
+                    />
+                    <motion.div
+                      variants={textHoverVariants}
+                      className="absolute inset-x-0 bottom-0 z-20 p-5 sm:p-6"
+                    >
                       <h3 className="text-xl font-extrabold tracking-tight text-white sm:text-2xl">
                         {card.title}
                       </h3>
                       <p className="mt-2 max-w-xl text-sm leading-6 text-white/80 sm:text-base">
                         {card.description}
                       </p>
-                    </div>
-                  </motion.article>
-                )
-              })}
+                    </motion.div>
+                  </motion.div>
+                </motion.article>
+              ))}
             </div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )

@@ -27,22 +27,44 @@ export function Navbar() {
   return (
     <nav
       className={cn(
-        'fixed left-0 right-0 top-0 z-50 border-b transition-all duration-500 ease-out',
+        'fixed left-0 right-0 top-0 z-50 overflow-hidden border-b backdrop-blur-md transition-[border-color,box-shadow] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]',
         isScrolled
-          ? 'border-[#D7CEF9]/70 bg-[#F0EBFF]/90 shadow-[0_12px_32px_rgba(110,65,226,0.14)] backdrop-blur-md'
-          : 'glass border-gray-100/60',
+          ? 'border-[#A78BFA]/45 shadow-[0_18px_45px_rgba(76,43,168,0.34)]'
+          : 'border-gray-100/60 shadow-none',
       )}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-3 sm:py-4 lg:px-8">
+      <div
+        aria-hidden="true"
+        className={cn(
+          'pointer-events-none absolute inset-0 bg-white/80 transition-opacity duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]',
+          isScrolled ? 'opacity-0' : 'opacity-100',
+        )}
+      />
+      <div
+        aria-hidden="true"
+        className={cn(
+          'pointer-events-none absolute inset-0 bg-gradient-to-r from-[#5833B5]/95 via-[#6E41E2]/95 to-[#4C2BA8]/95 transition-opacity duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]',
+          isScrolled ? 'opacity-100' : 'opacity-0',
+        )}
+      />
+      <div className="relative z-10 mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-3 sm:py-4 lg:px-8">
         <motion.a
           href="/"
           aria-label="EventGarde home"
           initial={{ opacity: 0, x: -28 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
-          className="flex min-w-max items-center gap-2 text-xl font-extrabold tracking-tight text-[#111827] sm:gap-3 sm:text-2xl"
+          className={cn(
+            'flex min-w-max items-center gap-2 text-xl font-extrabold tracking-tight transition-colors duration-500 ease-out sm:gap-3 sm:text-2xl',
+            isScrolled ? 'text-white' : 'text-[#111827]',
+          )}
         >
-          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white p-1 shadow-sm ring-1 ring-gray-100 sm:h-12 sm:w-12">
+          <span
+            className={cn(
+              'flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white p-1 shadow-sm ring-1 transition-colors duration-500 ease-out sm:h-12 sm:w-12',
+              isScrolled ? 'ring-white/25' : 'ring-gray-100',
+            )}
+          >
             <img
               src="/logo.png"
               alt=""
@@ -58,7 +80,12 @@ export function Navbar() {
             <a
               key={link.label}
               href={link.href}
-              className="relative py-2 text-sm font-medium text-[#4B5563] transition-all duration-300 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:rounded-full after:bg-[#6E41E2] after:shadow-[0_0_12px_rgba(110,65,226,0.65)] after:transition-transform after:duration-300 after:ease-out hover:font-bold hover:text-[#6E41E2] hover:drop-shadow-[0_0_10px_rgba(110,65,226,0.45)] hover:after:scale-x-100 focus-visible:font-bold focus-visible:text-[#6E41E2] focus-visible:outline-none focus-visible:drop-shadow-[0_0_10px_rgba(110,65,226,0.45)] focus-visible:after:scale-x-100"
+              className={cn(
+                'relative py-2 text-sm font-medium transition-all duration-500 ease-out after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:rounded-full after:transition-transform after:duration-500 after:ease-out hover:font-bold hover:after:scale-x-100 focus-visible:font-bold focus-visible:outline-none focus-visible:after:scale-x-100',
+                isScrolled
+                  ? 'text-white/82 after:bg-white after:shadow-[0_0_14px_rgba(255,255,255,0.5)] hover:text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.32)] focus-visible:text-white focus-visible:drop-shadow-[0_0_10px_rgba(255,255,255,0.32)]'
+                  : 'text-[#4B5563] after:bg-[#6E41E2] after:shadow-[0_0_12px_rgba(110,65,226,0.65)] hover:text-[#6E41E2] hover:drop-shadow-[0_0_10px_rgba(110,65,226,0.45)] focus-visible:text-[#6E41E2] focus-visible:drop-shadow-[0_0_10px_rgba(110,65,226,0.45)]',
+              )}
             >
               {link.label}
             </a>
@@ -68,18 +95,24 @@ export function Navbar() {
         <div className="flex items-center gap-3">
           <a
             href="/login"
+            data-shine={isScrolled ? undefined : 'purple'}
             className={cn(
-              'hidden rounded-full px-5 py-2.5 text-sm font-semibold transition-all sm:inline-flex',
-              'text-[#4B5563] hover:text-[#6E41E2] hover:bg-[#F0EBFF]',
+              'landing-shine-button hidden rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-500 ease-out sm:inline-flex',
+              isScrolled
+                ? 'text-white/85 hover:bg-white/10 hover:text-white'
+                : 'text-[#4B5563] hover:bg-[#F0EBFF] hover:text-[#6E41E2]',
             )}
           >
             Log In
           </a>
           <a
             href="/register"
+            data-shine={isScrolled ? 'purple' : undefined}
             className={cn(
-              'rounded-full px-4 py-2.5 text-sm font-semibold transition-all sm:px-5',
-              'bg-[#6E41E2] text-white hover:bg-[#5833B5]',
+              'landing-shine-button rounded-full px-4 py-2.5 text-sm font-semibold transition-all duration-500 ease-out sm:px-5',
+              isScrolled
+                ? 'bg-white text-[#5833B5] shadow-[0_12px_28px_rgba(17,24,39,0.18)] hover:bg-[#F0EBFF]'
+                : 'bg-[#6E41E2] text-white hover:bg-[#5833B5]',
             )}
           >
             Create Free Account

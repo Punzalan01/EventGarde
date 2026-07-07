@@ -58,6 +58,42 @@
     mix-blend-mode: multiply;
   }
 
+  .organizer-gradient-section {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background-color: #FAFAFC;
+  }
+
+  .organizer-gradient-section::before {
+    content: '';
+    position: absolute;
+    inset: -28%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.72;
+    background:
+      radial-gradient(circle at 14% 18%, rgba(110, 65, 226, 0.22), transparent 30%),
+      radial-gradient(circle at 82% 16%, rgba(76, 43, 168, 0.18), transparent 28%),
+      radial-gradient(circle at 52% 78%, rgba(255, 255, 255, 0.96), transparent 34%),
+      linear-gradient(120deg, #FFFFFF 0%, #F0EBFF 34%, rgba(110, 65, 226, 0.34) 64%, rgba(76, 43, 168, 0.28) 100%);
+    background-size: 150% 150%, 145% 145%, 130% 130%, 260% 260%;
+    filter: blur(18px);
+    animation: organizer-gradient-flow 18s ease-in-out infinite alternate;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .organizer-gradient-section::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 50% 0%, rgba(240, 235, 255, 0.36), transparent 38%),
+      linear-gradient(180deg, rgba(250, 250, 252, 0.94) 0%, rgba(250, 250, 252, 0.76) 46%, rgba(250, 250, 252, 0.95) 100%);
+  }
+
   .vendor-gradient-border {
     position: relative;
   }
@@ -88,8 +124,86 @@
     transition: opacity 300ms ease-out;
   }
 
-  .vendor-gradient-border:hover::before {
+  .vendor-gradient-border:hover::before,
+  .vendor-gradient-border[data-active='true']::before {
     opacity: 1;
+  }
+
+  .landing-shine-button {
+    --shine-color: rgba(255, 255, 255, 0.9);
+    --shine-soft: rgba(255, 255, 255, 0.28);
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    transform: translateZ(0);
+  }
+
+  .landing-shine-button::before {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    z-index: 1;
+    pointer-events: none;
+    border-radius: inherit;
+    opacity: 0.36;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.38), transparent 48%),
+      radial-gradient(circle at 18% 0%, rgba(255, 255, 255, 0.48), transparent 38%);
+    transition: opacity 360ms ease-out;
+  }
+
+  .landing-shine-button:hover::before,
+  .landing-shine-button:focus-visible::before {
+    opacity: 0.66;
+  }
+
+  .landing-shine-button::after {
+    content: '';
+    position: absolute;
+    inset: -86% -52%;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0;
+    background: linear-gradient(
+      115deg,
+      transparent 30%,
+      var(--shine-soft) 41%,
+      var(--shine-color) 48%,
+      rgba(255, 255, 255, 0.96) 50%,
+      var(--shine-color) 52%,
+      var(--shine-soft) 60%,
+      transparent 72%
+    );
+    filter: blur(0.5px);
+    mix-blend-mode: screen;
+    transform: translateX(-132%) skewX(-16deg);
+    transition: opacity 260ms ease-out;
+    will-change: transform;
+  }
+
+  .landing-shine-button:hover::after,
+  .landing-shine-button:focus-visible::after {
+    opacity: 1;
+    animation: landing-button-shine 3.2s linear infinite;
+  }
+
+  .landing-shine-button[data-shine='purple'] {
+    --shine-color: rgba(110, 65, 226, 0.46);
+    --shine-soft: rgba(167, 139, 250, 0.24);
+  }
+}
+
+@layer utilities {
+  .will-change-transform-filter {
+    will-change: transform, filter, opacity;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+  }
+
+  .motion-marquee-container {
+    display: flex;
+    backface-visibility: hidden;
+    -webkit-font-smoothing: subpixel-antialiased;
   }
 }
 
@@ -103,8 +217,42 @@
   }
 }
 
+@keyframes organizer-gradient-flow {
+  0% {
+    background-position: 0% 12%, 100% 8%, 44% 92%, 0% 50%;
+    transform: translate3d(-1.5%, -1%, 0) scale(1);
+  }
+
+  50% {
+    background-position: 42% 28%, 68% 34%, 58% 74%, 72% 46%;
+    transform: translate3d(1%, 0.5%, 0) scale(1.035);
+  }
+
+  100% {
+    background-position: 82% 18%, 22% 38%, 40% 68%, 100% 50%;
+    transform: translate3d(1.5%, 1%, 0) scale(1.06);
+  }
+}
+
+@keyframes landing-button-shine {
+  0% {
+    transform: translateX(-132%) skewX(-16deg);
+  }
+
+  100% {
+    transform: translateX(132%) skewX(-16deg);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .landing-mesh-section::before {
+  .landing-mesh-section::before,
+  .organizer-gradient-section::before {
     animation: none;
+  }
+
+  .landing-shine-button:hover::after,
+  .landing-shine-button:focus-visible::after {
+    animation: none;
+    transform: translateX(0) skewX(-16deg);
   }
 }

@@ -21,8 +21,9 @@ export function CTASection() {
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <a
             href="/register"
+            data-shine="purple"
             className={cn(
-              'inline-flex items-center justify-center rounded-full px-8 py-3.5 text-base font-semibold transition-all',
+              'landing-shine-button inline-flex items-center justify-center rounded-full px-8 py-3.5 text-base font-semibold transition-all',
               'bg-white text-[#6E41E2] hover:bg-gray-100',
               'shadow-[0_4px_14px_0_rgba(0,0,0,0.15)]',
             )}
@@ -32,7 +33,7 @@ export function CTASection() {
           <a
             href="/verification"
             className={cn(
-              'inline-flex items-center justify-center rounded-full px-8 py-3.5 text-base font-semibold transition-all',
+              'landing-shine-button inline-flex items-center justify-center rounded-full px-8 py-3.5 text-base font-semibold transition-all',
               'border-2 border-white bg-transparent text-white hover:bg-white/10',
             )}
           >

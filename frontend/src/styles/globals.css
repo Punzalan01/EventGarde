@@ -17,6 +17,12 @@
   h1, h2, h3, h4, h5, h6 {
     @apply text-[#111827] font-extrabold tracking-tight leading-[1.1];
   }
+
+  /* Hide default browser password reveal (Edge, IE) */
+  input::-ms-reveal,
+  input::-ms-clear {
+    display: none;
+  }
 }
 
 @layer components {

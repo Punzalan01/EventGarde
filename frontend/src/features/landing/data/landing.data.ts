@@ -5,6 +5,7 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 import type { HeroParallaxProduct } from '@/components/ui/hero-parallax'
+import type { Testimonial } from '@/components/ui/testimonials'
 
 export interface VendorCard {
   icon: LucideIcon
@@ -147,6 +148,36 @@ export const eventShowcaseItems: HeroParallaxProduct[] = [
     link: '/pricing',
     thumbnail:
       'https://images.unsplash.com/photo-1515168833906-d2a3b82b302a?auto=format&fit=crop&w=1200&q=80',
+  },
+]
+
+export const testimonialsData: Testimonial[] = [
+  {
+    id: 1,
+    quote:
+      'EventGarde made our ticket launch feel organized from day one. Verification, payments, and check-in all lived in one place.',
+    name: 'Mika Santos',
+    role: 'Festival Organizer',
+    imageSrc:
+      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    id: 2,
+    quote:
+      'The marketplace saved our team hours of vendor outreach. We found catering, AV, and venue support without leaving the event workflow.',
+    name: 'Andre Cruz',
+    role: 'Corporate Events Lead',
+    imageSrc:
+      'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    id: 3,
+    quote:
+      'As an attendee, discovery and ticketing felt simple. I could RSVP, pay, and keep my tickets ready for entry in minutes.',
+    name: 'Leah Mercado',
+    role: 'Event Attendee',
+    imageSrc:
+      'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=80',
   },
 ]
 

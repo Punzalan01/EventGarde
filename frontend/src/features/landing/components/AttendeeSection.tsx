@@ -64,76 +64,10 @@ const attendeeSlides = [
   },
 ]
 
-const backgroundVideos = [
-  {
-    title: 'DJ playing music on stage',
-    src: 'https://assets.mixkit.co/videos/4026/4026-720.mp4',
-  },
-  {
-    title: 'Young women jumping at the concert',
-    src: 'https://assets.mixkit.co/videos/14116/14116-720.mp4',
-  },
-  {
-    title: 'Audience of a music festival',
-    src: 'https://assets.mixkit.co/videos/4185/4185-720.mp4',
-  },
-  {
-    title: 'Audience at a concert',
-    src: 'https://assets.mixkit.co/videos/4269/4269-720.mp4',
-  },
-]
-
-function AttendeeVideoBackground() {
-  return (
-    <div
-      aria-hidden="true"
-      className="pointer-events-none absolute inset-0 z-0 overflow-hidden bg-[#1f1930]"
-    >
-      {backgroundVideos.map((video, index) => (
-        <motion.video
-          key={video.src}
-          className="absolute inset-0 h-full w-full object-cover opacity-0"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          title={video.title}
-          animate={{
-            opacity: [0, 0.28, 0.28, 0],
-            scale: [1, 1.04],
-          }}
-          transition={{
-            opacity: {
-              duration: 24,
-              ease: 'easeInOut',
-              repeat: Infinity,
-              delay: index * 6,
-              times: [0, 0.12, 0.38, 0.5],
-            },
-            scale: {
-              duration: 24,
-              ease: 'linear',
-              repeat: Infinity,
-              delay: index * 6,
-            },
-          }}
-        >
-          <source src={video.src} type="video/mp4" />
-        </motion.video>
-      ))}
-      <div className="absolute inset-0 bg-[#faf9f5]/78" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_20%,rgba(110,65,226,0.18),transparent_34%),radial-gradient(circle_at_76%_72%,rgba(49,89,183,0.14),transparent_36%)]" />
-      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#faf9f5] to-transparent" />
-    </div>
-  )
-}
-
 export function AttendeeSection() {
   return (
-    <section className="relative isolate overflow-hidden bg-[#faf9f5] py-20 text-[#3d3929] lg:py-24">
-      <AttendeeVideoBackground />
-      <HoverSlider className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
+    <section className="bg-[linear-gradient(135deg,#ffffff_0%,#fff7ed_42%,#f0ebff_100%)] py-20 text-[#3d3929] lg:py-24">
+      <HoverSlider className="mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div
           variants={fadeUp}
           initial="hidden"

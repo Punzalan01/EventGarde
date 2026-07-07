@@ -155,29 +155,32 @@ export const testimonialsData: Testimonial[] = [
   {
     id: 1,
     quote:
-      'EventGarde made our ticket launch feel organized from day one. Verification, payments, and check-in all lived in one place.',
-    name: 'Mika Santos',
-    role: 'Festival Organizer',
+      'Registration used to be the messiest part of our launch. EventGarde gave us one verified workspace for publishing, payment tracking, and guest updates.',
+    name: 'Organizer workspace',
+    role: 'Registration and event setup',
     imageSrc:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1760385737059-c65b583ec23e?auto=format&fit=crop&w=900&q=80',
+    imageAlt: 'Conference registration signage inside an event venue',
   },
   {
     id: 2,
     quote:
-      'The marketplace saved our team hours of vendor outreach. We found catering, AV, and venue support without leaving the event workflow.',
-    name: 'Andre Cruz',
-    role: 'Corporate Events Lead',
+      'QR tickets made entry fast and easy to audit. Staff could scan guests at the door while organizers watched attendance update in real time.',
+    name: 'Event-day check-in',
+    role: 'Ticket scanning and attendance',
     imageSrc:
-      'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1662383729882-e03ce8e00887?auto=format&fit=crop&w=900&q=80',
+    imageAlt: 'A phone displaying a QR ticket for event entry',
   },
   {
     id: 3,
     quote:
-      'As an attendee, discovery and ticketing felt simple. I could RSVP, pay, and keep my tickets ready for entry in minutes.',
-    name: 'Leah Mercado',
-    role: 'Event Attendee',
+      'Vendor planning stayed connected to the event budget. We could compare service options, book food partners, and keep every request tied to the event.',
+    name: 'Vendor marketplace',
+    role: 'Food service and supplier booking',
     imageSrc:
-      'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1760561150700-b8af77e68edf?auto=format&fit=crop&w=900&q=80',
+    imageAlt: 'Food trailer parked outdoors for event vendor service',
   },
 ]
 

@@ -7,6 +7,7 @@ export interface Testimonial {
   name: string
   role: string
   imageSrc: string
+  imageAlt?: string
 }
 
 export interface TestimonialSectionProps {
@@ -69,7 +70,7 @@ export function TestimonialSection({
             >
               <img
                 src={testimonial.imageSrc}
-                alt={testimonial.name}
+                alt={testimonial.imageAlt ?? testimonial.name}
                 className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
                 loading="lazy"
                 decoding="async"

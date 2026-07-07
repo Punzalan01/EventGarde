@@ -17,3 +17,5 @@ uploads/*
 !uploads/.gitkeep
 coverage/
 .turbo/
+.vite/
+*.tsbuildinfo

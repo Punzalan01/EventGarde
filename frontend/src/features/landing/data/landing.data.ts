@@ -4,6 +4,7 @@ import {
   Building2,
   type LucideIcon,
 } from 'lucide-react'
+import type { HeroParallaxProduct } from '@/components/ui/hero-parallax'
 
 export interface VendorCard {
   icon: LucideIcon
@@ -53,6 +54,99 @@ export const vendorCards: VendorCard[] = [
       'Intimate galleries, grand ballrooms, outdoor gardens — discover and book unique spaces that match your event vision.',
     bgColor: 'bg-[#EBF5FF]',
     iconColor: 'text-[#4171E2]',
+  },
+]
+
+export const eventShowcaseItems: HeroParallaxProduct[] = [
+  {
+    title: 'Rooftop Launch Night',
+    link: '/events',
+    thumbnail:
+      'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=1200&q=80',
+  },
+  {
+    title: 'Main Stage Festival',
+    link: '/events',
+    thumbnail:
+      'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=1200&q=80',
+  },
+  {
+    title: 'Private Dining Series',
+    link: '/marketplace',
+    thumbnail:
+      'https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=1200&q=80',
+  },
+  {
+    title: 'Gallery Reception',
+    link: '/events',
+    thumbnail:
+      'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=1200&q=80',
+  },
+  {
+    title: 'Conference Check-In',
+    link: '/pricing',
+    thumbnail:
+      'https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=1200&q=80',
+  },
+  {
+    title: 'Outdoor Music Market',
+    link: '/events',
+    thumbnail:
+      'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1200&q=80',
+  },
+  {
+    title: 'Verified Vendor Setup',
+    link: '/marketplace',
+    thumbnail:
+      'https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1200&q=80',
+  },
+  {
+    title: 'Executive Summit',
+    link: '/pricing',
+    thumbnail:
+      'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=1200&q=80',
+  },
+  {
+    title: 'After-Hours Social',
+    link: '/events',
+    thumbnail:
+      'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=1200&q=80',
+  },
+  {
+    title: 'Creator Workshop',
+    link: '/events',
+    thumbnail:
+      'https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1200&q=80',
+  },
+  {
+    title: 'Immersive Brand Pop-Up',
+    link: '/marketplace',
+    thumbnail:
+      'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=1200&q=80',
+  },
+  {
+    title: 'Ballroom Fundraiser',
+    link: '/events',
+    thumbnail:
+      'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1200&q=80',
+  },
+  {
+    title: 'Community Food Fair',
+    link: '/marketplace',
+    thumbnail:
+      'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80',
+  },
+  {
+    title: 'Night Market Tickets',
+    link: '/events',
+    thumbnail:
+      'https://images.unsplash.com/photo-1472653431158-6364773b2a56?auto=format&fit=crop&w=1200&q=80',
+  },
+  {
+    title: 'Secure Event Entry',
+    link: '/pricing',
+    thumbnail:
+      'https://images.unsplash.com/photo-1515168833906-d2a3b82b302a?auto=format&fit=crop&w=1200&q=80',
   },
 ]
 

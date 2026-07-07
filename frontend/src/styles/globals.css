@@ -4,11 +4,14 @@
 
 @layer base {
   html {
+    overflow-x: clip;
+    position: relative;
     scroll-behavior: smooth;
   }
 
   body {
     @apply text-[#4B5563] leading-relaxed;
+    overflow-x: clip;
   }
 
   h1, h2, h3, h4, h5, h6 {

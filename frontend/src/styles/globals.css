@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply text-[#4B5563] leading-relaxed;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-[#111827] font-extrabold tracking-tight leading-[1.1];
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/80 backdrop-blur-md;
+  }
+}

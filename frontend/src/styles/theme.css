@@ -1,0 +1,13 @@
+:root {
+  --color-brand-primary: #6E41E2;
+  --color-brand-hover: #5833B5;
+  --color-lavender-bg: #F0EBFF;
+  --color-lavender-text: #5833B5;
+  --color-peach-bg: #FFF1E8;
+  --color-heading: #111827;
+
+  --shadow-soft: 0 20px 40px -10px rgba(0, 0, 0, 0.08),
+    0 10px 15px -5px rgba(0, 0, 0, 0.03);
+  --shadow-soft-lg: 0 30px 60px -15px rgba(0, 0, 0, 0.1),
+    0 15px 25px -8px rgba(0, 0, 0, 0.04);
+}

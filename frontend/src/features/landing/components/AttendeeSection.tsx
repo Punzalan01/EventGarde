@@ -97,14 +97,14 @@ export function AttendeeSection() {
                 key={slide.id}
                 index={index}
                 aria-label={`${slide.title}: ${slide.description}`}
-                className="group w-full rounded-xl border border-transparent p-4 transition duration-300 hover:border-[#e4ddce] hover:bg-white/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#6E41E2] data-[active=true]:border-[#6E41E2]/20 data-[active=true]:bg-white data-[active=true]:shadow-soft"
+                className="group w-full rounded-xl border border-transparent bg-transparent p-4 transition duration-300 hover:bg-transparent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#6E41E2] data-[active=true]:bg-transparent"
               >
                 <TextStaggerHover
                   index={index}
                   text={slide.title}
-                  className="block text-3xl font-extrabold uppercase leading-none tracking-normal text-[#3d3929] sm:text-4xl lg:text-5xl"
+                  className="block text-3xl font-extrabold uppercase leading-none tracking-normal text-[#111827] transition duration-300 group-hover:text-[#6E41E2] group-hover:drop-shadow-[0_0_16px_rgba(110,65,226,0.42)] group-data-[active=true]:text-[#6E41E2] group-data-[active=true]:drop-shadow-[0_0_16px_rgba(110,65,226,0.42)] sm:text-4xl lg:text-5xl"
                 />
-                <span className="mt-3 block max-w-xl text-sm leading-6 text-[#625d50] sm:text-base">
+                <span className="mt-3 block max-w-xl text-sm leading-6 text-[#111827] transition duration-300 group-hover:text-[#5833B5] group-data-[active=true]:text-[#5833B5] sm:text-base">
                   {slide.description}
                 </span>
               </HoverSliderTrigger>

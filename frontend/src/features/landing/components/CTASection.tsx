@@ -4,9 +4,6 @@ import { cn } from '@/utils/cn'
 export function CTASection() {
   return (
     <section className="relative overflow-hidden bg-[#6E41E2] py-24 lg:py-32">
-      <div className="pointer-events-none absolute top-[-20%] right-[-10%] h-96 w-96 rounded-full bg-white/5 blur-3xl" />
-      <div className="pointer-events-none absolute bottom-[-20%] left-[-10%] h-96 w-96 rounded-full bg-white/5 blur-3xl" />
-
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}

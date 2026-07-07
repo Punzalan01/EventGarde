@@ -13,68 +13,102 @@ const fadeUp = {
 const features = [
   {
     icon: Search,
-    text: 'Public discovery page to browse and find your next favorite event.',
+    title: 'Find relevant events',
+    description:
+      'Browse public listings by category, date, and venue so attendees can move from interest to RSVP quickly.',
   },
   {
     icon: Ticket,
-    text: 'Seamless RSVPs and instant digital ticketing — no hidden fees.',
+    title: 'Keep tickets ready',
+    description:
+      'RSVPs, paid tickets, and QR entry details stay attached to the attendee workspace.',
   },
   {
     icon: ShoppingBag,
-    text: 'Explore the vendor marketplace and book services directly.',
+    title: 'Plan around vendors',
+    description:
+      'Discover food, AV, and venue services without leaving the EventGarde flow.',
+  },
+]
+
+const attendeePreviewRows = [
+  {
+    icon: Search,
+    title: 'Discovery feed',
+    detail: 'Concerts, workshops, markets',
+    accent: 'bg-[#F0EBFF] text-[#6E41E2]',
+  },
+  {
+    icon: Ticket,
+    title: 'Ticket wallet',
+    detail: 'QR tickets and RSVP status',
+    accent: 'bg-[#FFF1E8] text-[#B8732E]',
+  },
+  {
+    icon: ShoppingBag,
+    title: 'Vendor shortlist',
+    detail: 'Saved food, AV, and venue services',
+    accent: 'bg-[#EBF5FF] text-[#3159B7]',
   },
 ]
 
 export function AttendeeSection() {
   return (
-    <section className="py-20 lg:py-28">
+    <section className="bg-white py-20 lg:py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid items-center gap-16 lg:grid-cols-2">
+        <div className="grid items-center gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:gap-14">
           <motion.div
             variants={fadeUp}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="relative mx-auto w-full max-w-md"
+            className="relative mx-auto w-full max-w-lg"
           >
-            <div className="rounded-2xl bg-white p-6 shadow-soft">
-              <div className="mb-4 flex items-center gap-2">
-                <div className="h-3 w-3 rounded-full bg-green-400" />
-                <span className="text-xs font-medium text-green-600">
-                  Discover
-                </span>
+            <div className="rounded-xl border border-gray-100 bg-white p-5 shadow-soft">
+              <div className="mb-5 flex items-start justify-between gap-5 border-b border-gray-100 pb-4">
+                <div>
+                  <h3 className="text-lg font-bold tracking-tight text-[#111827]">
+                    Attendee workspace
+                  </h3>
+                  <p className="mt-1 text-sm leading-6 text-[#6B7280]">
+                    A practical home for discovery, RSVPs, tickets, and vendor
+                    research.
+                  </p>
+                </div>
+                <div className="text-right">
+                  <div className="text-2xl font-extrabold leading-none text-[#6E41E2]">
+                    12
+                  </div>
+                  <div className="mt-1 text-xs font-semibold uppercase tracking-wide text-[#6B7280]">
+                    Saved events
+                  </div>
+                </div>
               </div>
-              <div className="space-y-3">
-                <div className="flex items-center gap-4 rounded-xl border border-gray-100 p-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#F0EBFF]">
-                    <div className="h-6 w-6 rounded bg-[#6E41E2]" />
-                  </div>
-                  <div className="flex-1 space-y-1.5">
-                    <div className="h-3 w-32 rounded-full bg-gray-200" />
-                    <div className="h-2.5 w-24 rounded-full bg-gray-100" />
-                  </div>
-                  <div className="h-6 w-16 rounded-full bg-[#6E41E2]/10" />
-                </div>
-                <div className="flex items-center gap-4 rounded-xl border border-gray-100 p-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#FFF1E8]">
-                    <div className="h-6 w-6 rounded bg-[#E29541]" />
-                  </div>
-                  <div className="flex-1 space-y-1.5">
-                    <div className="h-3 w-28 rounded-full bg-gray-200" />
-                    <div className="h-2.5 w-20 rounded-full bg-gray-100" />
-                  </div>
-                  <div className="h-6 w-16 rounded-full bg-[#E29541]/10" />
-                </div>
-                <div className="flex items-center gap-4 rounded-xl border border-gray-100 p-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#EBF5FF]">
-                    <div className="h-6 w-6 rounded bg-[#4171E2]" />
-                  </div>
-                  <div className="flex-1 space-y-1.5">
-                    <div className="h-3 w-36 rounded-full bg-gray-200" />
-                    <div className="h-2.5 w-20 rounded-full bg-gray-100" />
-                  </div>
-                  <div className="h-6 w-16 rounded-full bg-[#4171E2]/10" />
-                </div>
+
+              <div className="space-y-2.5">
+                {attendeePreviewRows.map((row) => {
+                  const Icon = row.icon
+                  return (
+                    <div
+                      key={row.title}
+                      className="grid grid-cols-[2.75rem_1fr] items-center gap-3 rounded-lg border border-gray-100 bg-[#FBFBFD] p-3"
+                    >
+                      <span
+                        className={`flex h-11 w-11 items-center justify-center rounded-lg ${row.accent}`}
+                      >
+                        <Icon className="h-5 w-5" />
+                      </span>
+                      <div>
+                        <div className="text-sm font-bold text-[#111827]">
+                          {row.title}
+                        </div>
+                        <div className="mt-0.5 text-sm leading-5 text-[#6B7280]">
+                          {row.detail}
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
               </div>
             </div>
           </motion.div>
@@ -84,27 +118,32 @@ export function AttendeeSection() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="flex flex-col gap-6"
+            className="flex flex-col gap-5"
           >
-            <span className="inline-flex w-fit rounded-full bg-[#F0EBFF] px-4 py-1.5 text-sm font-semibold text-[#5833B5]">
-              For the Attendees
-            </span>
             <h2 className="text-3xl leading-[1.1] tracking-tight text-[#111827] sm:text-4xl lg:text-5xl">
               Your personal event passport.
             </h2>
-            <p className="max-w-xl text-lg leading-relaxed text-[#4B5563]">
+            <p className="max-w-2xl text-lg leading-relaxed text-[#4B5563]">
               Your Personal Workspace is completely free. Browse the public
               discovery page, RSVP to events, buy tickets instantly, and explore
-              our vendor marketplace — all from one beautiful dashboard.
+              the vendor marketplace from one dashboard.
             </p>
-            <ul className="mt-2 space-y-4">
-              {features.map((f) => (
-                <li key={f.text} className="flex items-start gap-4">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#F0EBFF]">
-                    <f.icon className="h-5 w-5 text-[#6E41E2]" />
+            <ul className="mt-1 space-y-3">
+              {features.map((feature) => (
+                <li
+                  key={feature.title}
+                  className="grid grid-cols-[2.75rem_1fr] gap-4 rounded-lg border border-gray-100 bg-[#FBFBFD] p-4"
+                >
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[#F0EBFF]">
+                    <feature.icon className="h-5 w-5 text-[#6E41E2]" />
                   </span>
-                  <span className="pt-1.5 text-base leading-relaxed text-[#4B5563]">
-                    {f.text}
+                  <span>
+                    <span className="block text-base font-bold tracking-tight text-[#111827]">
+                      {feature.title}
+                    </span>
+                    <span className="mt-1 block text-sm leading-6 text-[#4B5563]">
+                      {feature.description}
+                    </span>
                   </span>
                 </li>
               ))}

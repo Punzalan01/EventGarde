@@ -33,7 +33,7 @@ const springConfig = { stiffness: 300, damping: 30, bounce: 100 }
 
 export function HeroParallax({
   products,
-  eyebrow = 'EventGarde',
+  eyebrow,
   title = 'Experience events beautifully.',
   highlightedTitle = 'Host them flawlessly.',
   description = 'Discover live experiences, manage ticketing, coordinate vendors, and run verified event operations from one polished workspace.',
@@ -139,9 +139,11 @@ export function Header({
 }: Omit<HeroParallaxProps, 'products'>) {
   return (
     <div className="relative left-0 top-0 z-10 mx-auto w-full max-w-7xl px-6 pb-16 pt-8 md:pb-24 lg:px-8">
-      <span className="mb-6 inline-flex rounded-full border border-[#D7CEF9] bg-white px-4 py-1.5 text-sm font-semibold text-[#5833B5] shadow-sm">
-        {eyebrow}
-      </span>
+      {eyebrow ? (
+        <span className="mb-6 inline-flex rounded-full border border-[#D7CEF9] bg-white px-4 py-1.5 text-sm font-semibold text-[#5833B5] shadow-sm">
+          {eyebrow}
+        </span>
+      ) : null}
       <h1 className="max-w-5xl text-4xl font-extrabold leading-[1.05] tracking-tight text-[#111827] sm:text-5xl md:text-7xl">
         {title}{' '}
         <span className="text-[#6E41E2]">{highlightedTitle}</span>

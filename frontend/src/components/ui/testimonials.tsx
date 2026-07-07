@@ -43,12 +43,9 @@ export function TestimonialSection({
   testimonials,
 }: TestimonialSectionProps) {
   return (
-    <section className="w-full bg-white py-20 lg:py-28">
+    <section className="w-full bg-[#FFF8F2] py-20 lg:py-24">
       <div className="mx-auto max-w-7xl px-6 text-center lg:px-8">
-        <span className="inline-flex rounded-full bg-[#EBF5FF] px-4 py-1.5 text-sm font-semibold text-[#3159B7]">
-          Social Proof
-        </span>
-        <h2 className="mx-auto mt-4 max-w-3xl text-3xl leading-[1.1] tracking-tight text-[#111827] sm:text-4xl lg:text-5xl">
+        <h2 className="mx-auto max-w-3xl text-3xl leading-[1.1] tracking-tight text-[#111827] sm:text-4xl lg:text-5xl">
           {title}
         </h2>
         <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-[#4B5563]">
@@ -65,7 +62,7 @@ export function TestimonialSection({
           {testimonials.map((testimonial) => (
             <motion.figure
               key={testimonial.id}
-              className="group relative h-[30rem] overflow-hidden rounded-lg bg-[#111827] text-left shadow-soft"
+              className="group relative h-[28rem] overflow-hidden rounded-lg bg-[#111827] text-left shadow-soft"
               variants={itemVariants}
             >
               <img

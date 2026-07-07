@@ -13,53 +13,90 @@ const fadeUp = {
 const features = [
   {
     icon: Shield,
-    text: 'Event creation is strictly locked behind identity verification.',
+    title: 'Verified organizer access',
+    description:
+      'Keep event creation behind identity checks and paid workspace permissions.',
   },
   {
     icon: CreditCard,
-    text: 'Integrated ticketing and payment processing via PayMongo.',
+    title: 'Ticketing and payments',
+    description:
+      'Sell tickets, monitor payments, and keep revenue reporting close to event operations.',
   },
   {
     icon: ScanLine,
-    text: 'On-site QR scanning for fast, secure event-day check-ins.',
+    title: 'Fast entry scanning',
+    description:
+      'Use QR scanning for event-day check-ins with live attendance visibility.',
   },
   {
     icon: LayoutDashboard,
-    text: 'Vendor coordination tools to manage every partner seamlessly.',
+    title: 'Vendor coordination',
+    description:
+      'Track booked partners, requests, and planning tasks from the same workspace.',
+  },
+]
+
+const organizerPreviewRows = [
+  {
+    icon: Shield,
+    title: 'Verification gate',
+    detail: 'Organizer access checked before publishing',
+  },
+  {
+    icon: CreditCard,
+    title: 'Payment tracking',
+    detail: 'Ticket revenue and failed payments visible',
+  },
+  {
+    icon: ScanLine,
+    title: 'Entry operations',
+    detail: 'QR scans update attendance in real time',
+  },
+  {
+    icon: LayoutDashboard,
+    title: 'Vendor tasks',
+    detail: 'Bookings and requests stay tied to the event',
   },
 ]
 
 export function OrganizerSection() {
   return (
-    <section className="py-20 lg:py-28">
+    <section className="bg-[#F7F4FF] py-20 lg:py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid items-center gap-16 lg:grid-cols-2">
+        <div className="grid items-center gap-10 lg:grid-cols-[1.06fr_0.94fr] lg:gap-14">
           <motion.div
             variants={fadeUp}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="flex flex-col gap-6 lg:order-1"
+            className="flex flex-col gap-5"
           >
-            <span className="inline-flex w-fit rounded-full bg-[#FFF1E8] px-4 py-1.5 text-sm font-semibold text-[#B57841]">
-              For Verified Organizers
-            </span>
             <h2 className="text-3xl leading-[1.1] tracking-tight text-[#111827] sm:text-4xl lg:text-5xl">
               Enterprise power, verified trust.
             </h2>
-            <p className="max-w-xl text-lg leading-relaxed text-[#4B5563]">
+            <p className="max-w-2xl text-lg leading-relaxed text-[#4B5563]">
               Event creation is exclusive to verified organizers on a paid
-              workspace subscription. You get enterprise-grade ticketing,
-              integrated payments, event-day scanning, and vendor coordination.
+              workspace subscription. You get ticketing, integrated payments,
+              event-day scanning, and vendor coordination without scattering
+              work across tools.
             </p>
-            <ul className="mt-2 space-y-4">
-              {features.map((f) => (
-                <li key={f.text} className="flex items-start gap-4">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#FFF1E8]">
-                    <f.icon className="h-5 w-5 text-[#E29541]" />
+            <ul className="mt-1 grid gap-3 md:grid-cols-2">
+              {features.map((feature) => (
+                <li
+                  key={feature.title}
+                  className="grid grid-cols-[2.75rem_1fr] gap-4 rounded-lg border border-[#E3DAFF] bg-white/80 p-4"
+                >
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[#FFF1E8]">
+                    <feature.icon className="h-5 w-5 text-[#B8732E]" />
                   </span>
-                  <span className="pt-1.5 text-base leading-relaxed text-[#4B5563]">
-                    {f.text}
+                  <span>
+                    <span className="block text-base font-bold tracking-tight text-[#111827]">
+                      {feature.title}
+                    </span>
+                    <span className="mt-1 block text-sm leading-6 text-[#4B5563]">
+                      {feature.description}
+                    </span>
                   </span>
                 </li>
               ))}
@@ -79,66 +116,58 @@ export function OrganizerSection() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="relative mx-auto w-full max-w-md lg:order-2"
+            className="relative mx-auto w-full max-w-lg"
           >
-            <div className="rounded-2xl bg-white p-6 shadow-soft">
-              <div className="mb-4 flex items-center gap-2">
-                <div className="h-3 w-3 rounded-full bg-[#6E41E2]" />
-                <span className="text-xs font-medium text-[#6E41E2]">
-                  Organizer Dashboard
-                </span>
-              </div>
-
-              <div className="mb-4 grid grid-cols-3 gap-3">
-                <div className="rounded-xl bg-[#F0EBFF] p-3 text-center">
-                  <div className="mx-auto mb-1 h-6 w-6 rounded bg-[#6E41E2]" />
-                  <div className="mx-auto h-2 w-12 rounded-full bg-[#6E41E2]/20" />
-                </div>
-                <div className="rounded-xl bg-[#FFF1E8] p-3 text-center">
-                  <div className="mx-auto mb-1 h-6 w-6 rounded bg-[#E29541]" />
-                  <div className="mx-auto h-2 w-12 rounded-full bg-[#E29541]/20" />
-                </div>
-                <div className="rounded-xl bg-[#EBF5FF] p-3 text-center">
-                  <div className="mx-auto mb-1 h-6 w-6 rounded bg-[#4171E2]" />
-                  <div className="mx-auto h-2 w-12 rounded-full bg-[#4171E2]/20" />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <div className="flex items-center justify-between rounded-lg border border-gray-100 px-4 py-2.5">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-green-100 text-xs font-bold text-green-700">
-                      128
-                    </div>
-                    <span className="text-sm font-medium text-[#4B5563]">
-                      Tickets Sold
-                    </span>
+            <div className="rounded-xl border border-[#E3DAFF] bg-white p-5 shadow-soft">
+              <div className="mb-5 grid gap-3 border-b border-gray-100 pb-4 sm:grid-cols-3">
+                <div>
+                  <div className="text-2xl font-extrabold leading-none text-[#6E41E2]">
+                    128
                   </div>
-                  <div className="h-6 w-16 rounded bg-green-100" />
-                </div>
-                <div className="flex items-center justify-between rounded-lg border border-gray-100 px-4 py-2.5">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#F0EBFF] text-xs font-bold text-[#6E41E2]">
-                      42
-                    </div>
-                    <span className="text-sm font-medium text-[#4B5563]">
-                      Checked In
-                    </span>
+                  <div className="mt-1 text-xs font-semibold uppercase tracking-wide text-[#6B7280]">
+                    Tickets sold
                   </div>
-                  <div className="h-6 w-16 rounded bg-[#F0EBFF]" />
+                </div>
+                <div>
+                  <div className="text-2xl font-extrabold leading-none text-[#111827]">
+                    42
+                  </div>
+                  <div className="mt-1 text-xs font-semibold uppercase tracking-wide text-[#6B7280]">
+                    Checked in
+                  </div>
+                </div>
+                <div>
+                  <div className="text-2xl font-extrabold leading-none text-[#B8732E]">
+                    PHP 24.5k
+                  </div>
+                  <div className="mt-1 text-xs font-semibold uppercase tracking-wide text-[#6B7280]">
+                    Revenue
+                  </div>
                 </div>
               </div>
 
-              <div className="mt-4 rounded-xl bg-gradient-to-r from-[#6E41E2] to-[#5833B5] p-4 text-white">
-                <div className="mb-1 text-xs font-medium opacity-80">
-                  Revenue
-                </div>
-                <div className="text-2xl font-extrabold tracking-tight">
-                  PHP 24,580
-                </div>
-                <div className="mt-1 h-1.5 w-full rounded-full bg-white/20">
-                  <div className="h-1.5 w-3/4 rounded-full bg-white/60" />
-                </div>
+              <div className="space-y-2.5">
+                {organizerPreviewRows.map((row) => {
+                  const Icon = row.icon
+                  return (
+                    <div
+                      key={row.title}
+                      className="grid grid-cols-[2.75rem_1fr] items-center gap-3 rounded-lg border border-gray-100 bg-[#FBFBFD] p-3"
+                    >
+                      <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-[#F0EBFF] text-[#6E41E2]">
+                        <Icon className="h-5 w-5" />
+                      </span>
+                      <div>
+                        <div className="text-sm font-bold text-[#111827]">
+                          {row.title}
+                        </div>
+                        <div className="mt-0.5 text-sm leading-5 text-[#6B7280]">
+                          {row.detail}
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
               </div>
             </div>
           </motion.div>

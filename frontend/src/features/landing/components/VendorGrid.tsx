@@ -19,19 +19,16 @@ const cardAnim = {
 
 export function VendorGrid() {
   return (
-    <section className="py-20 lg:py-28">
+    <section className="bg-[#F5FAFF] py-20 lg:py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-          className="mx-auto mb-14 max-w-2xl text-center"
+          className="mx-auto mb-12 max-w-3xl text-center"
         >
-          <span className="inline-flex rounded-full bg-[#F0EBFF] px-4 py-1.5 text-sm font-semibold text-[#5833B5]">
-            Marketplace
-          </span>
-          <h2 className="mt-4 text-3xl leading-[1.1] tracking-tight text-[#111827] sm:text-4xl lg:text-5xl">
+          <h2 className="text-3xl leading-[1.1] tracking-tight text-[#111827] sm:text-4xl lg:text-5xl">
             Connect with top-tier vendors
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-[#4B5563]">
@@ -45,7 +42,7 @@ export function VendorGrid() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid gap-8 lg:grid-cols-3"
+          className="grid gap-5 lg:grid-cols-3"
         >
           {vendorCards.map((card) => {
             const Icon = card.icon
@@ -53,17 +50,19 @@ export function VendorGrid() {
               <motion.div
                 key={card.title}
                 variants={cardAnim}
-                className="group rounded-2xl border border-gray-100 bg-white p-8 shadow-soft transition-all hover:-translate-y-1 hover:shadow-soft-lg"
+                className="group rounded-xl border border-[#DCEBFA] bg-white p-5 shadow-soft transition-all hover:-translate-y-1 hover:shadow-soft-lg"
               >
-                <div
-                  className={`mb-5 flex h-14 w-14 items-center justify-center rounded-2xl ${card.bgColor}`}
-                >
-                  <Icon className={`h-7 w-7 ${card.iconColor}`} />
+                <div className="mb-4 grid grid-cols-[3.25rem_1fr] items-center gap-4">
+                  <div
+                    className={`flex h-12 w-12 items-center justify-center rounded-lg ${card.bgColor}`}
+                  >
+                    <Icon className={`h-6 w-6 ${card.iconColor}`} />
+                  </div>
+                  <h3 className="text-xl font-bold tracking-tight text-[#111827]">
+                    {card.title}
+                  </h3>
                 </div>
-                <h3 className="mb-3 text-xl font-bold tracking-tight text-[#111827]">
-                  {card.title}
-                </h3>
-                <p className="text-base leading-relaxed text-[#4B5563]">
+                <p className="text-sm leading-6 text-[#4B5563]">
                   {card.description}
                 </p>
               </motion.div>

@@ -5,7 +5,6 @@ export function HeroSection() {
   return (
     <HeroParallax
       products={eventShowcaseItems}
-      eyebrow="The complete event ecosystem"
       title="Experience events beautifully."
       highlightedTitle="Host them flawlessly."
       description="EventGarde brings discovery, ticketing, vendor booking, organizer verification, and event-day operations into one polished workspace."

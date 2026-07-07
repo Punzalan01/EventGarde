@@ -36,7 +36,7 @@ export const vendorCards: VendorCard[] = [
     icon: UtensilsCrossed,
     title: 'Catering & Bar',
     description:
-      'From gourmet food trucks to premium open bars. Browse verified vendors,compare menus, and book directly through the platform.',
+      'From gourmet food trucks to premium open bars. Browse verified vendors, compare menus, and book directly through the platform.',
     bgColor: 'bg-[#F0EBFF]',
     iconColor: 'text-[#6E41E2]',
   },

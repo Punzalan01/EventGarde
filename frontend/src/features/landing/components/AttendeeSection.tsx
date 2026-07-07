@@ -23,8 +23,8 @@ const attendeeSlides = [
     description:
       'Browse public events by category, date, and venue before deciding where to spend the night.',
     imageUrl:
-      'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1600&q=80',
-    alt: 'A live event crowd with raised hands under stage lights',
+      'https://images.unsplash.com/photo-1773134491442-185e2221cd9d?auto=format&fit=crop&w=1600&q=80',
+    alt: 'People browsing vendor stalls at a nighttime community event',
   },
   {
     id: 'tickets',
@@ -32,8 +32,8 @@ const attendeeSlides = [
     description:
       'Keep RSVPs, QR tickets, payment status, and entry details connected to one attendee workspace.',
     imageUrl:
-      'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=1600&q=80',
-    alt: 'Guests gathered at a warmly lit event venue',
+      'https://images.unsplash.com/photo-1587285473889-3952a6e12212?auto=format&fit=crop&w=1600&q=80',
+    alt: 'A hand holding a printed event ticket with QR details',
   },
   {
     id: 'vendors',
@@ -41,8 +41,8 @@ const attendeeSlides = [
     description:
       'Shortlist food, venues, audio, styling, and production partners while planning around the event.',
     imageUrl:
-      'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1600&q=80',
-    alt: 'Prepared catering dishes arranged for an event service',
+      'https://images.unsplash.com/photo-1777427676365-d84b81691767?auto=format&fit=crop&w=1600&q=80',
+    alt: 'Event catering staff serving food from buffet trays',
   },
   {
     id: 'check-in',
@@ -50,8 +50,8 @@ const attendeeSlides = [
     description:
       'Pull up the right ticket fast at the door so the arrival flow stays simple for attendees and staff.',
     imageUrl:
-      'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=1600&q=80',
-    alt: 'People celebrating together at a social event',
+      'https://images.unsplash.com/photo-1760385737059-c65b583ec23e?auto=format&fit=crop&w=1600&q=80',
+    alt: 'A conference registration desk for attendee check-in',
   },
   {
     id: 'plan',

@@ -68,12 +68,11 @@ export function AttendeeSection() {
   return (
     <section className="relative overflow-hidden bg-white py-20 text-[#3d3929] lg:py-24">
       <img
-        src="https://rsvpify.com/wp-content/uploads/2025/05/Hero-Section.png"
+        src="/images/background.png"
         alt=""
         aria-hidden="true"
         className="absolute inset-0 h-full w-full object-cover"
       />
-      <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.62)_0%,rgba(255,247,237,0.5)_45%,rgba(240,235,255,0.56)_100%)]" />
       <HoverSlider className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div
           variants={fadeUp}

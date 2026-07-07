@@ -1,18 +1,11 @@
-import {
-  UtensilsCrossed,
-  Radio,
-  Building2,
-  type LucideIcon,
-} from 'lucide-react'
 import type { HeroParallaxProduct } from '@/components/ui/hero-parallax'
 import type { Testimonial } from '@/components/ui/testimonials'
 
 export interface VendorCard {
-  icon: LucideIcon
   title: string
   description: string
-  bgColor: string
-  iconColor: string
+  imageUrl: string
+  imageAlt: string
 }
 
 export interface NavLink {
@@ -33,28 +26,29 @@ export const navLinks: NavLink[] = [
 
 export const vendorCards: VendorCard[] = [
   {
-    icon: UtensilsCrossed,
     title: 'Catering & Bar',
     description:
       'From gourmet food trucks to premium open bars. Browse verified vendors, compare menus, and book directly through the platform.',
-    bgColor: 'bg-[#F0EBFF]',
-    iconColor: 'text-[#6E41E2]',
+    imageUrl:
+      'https://images.unsplash.com/photo-1763376360111-3597e5877517?auto=format&fit=crop&w=1600&q=85',
+    imageAlt: 'A chef arranging colorful gourmet small plates for event catering',
   },
   {
-    icon: Radio,
     title: 'Audio & Visuals',
     description:
       'Professional sound systems, lighting rigs, LED walls, and staging. Find AV teams that know how to set the perfect atmosphere.',
-    bgColor: 'bg-[#FFF1E8]',
-    iconColor: 'text-[#E29541]',
+    imageUrl:
+      'https://images.unsplash.com/photo-1710946708304-ad7e4fd586a2?auto=format&fit=crop&w=1600&q=85',
+    imageAlt: 'A close-up audio engineer console with knobs and controls',
   },
   {
-    icon: Building2,
     title: 'Venues & Spaces',
     description:
       'Intimate galleries, grand ballrooms, outdoor gardens — discover and book unique spaces that match your event vision.',
-    bgColor: 'bg-[#EBF5FF]',
-    iconColor: 'text-[#4171E2]',
+    imageUrl:
+      'https://images.unsplash.com/photo-1780593116478-c46838f86523?auto=format&fit=crop&w=1600&q=85',
+    imageAlt:
+      'A luxurious ballroom with chandeliers and white tables set for an event',
   },
 ]
 

@@ -30,7 +30,7 @@ export function Navbar() {
             <a
               key={link.label}
               href={link.href}
-              className="text-sm font-medium text-[#4B5563] transition-colors hover:text-[#6E41E2]"
+              className="relative py-2 text-sm font-medium text-[#4B5563] transition-all duration-300 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:rounded-full after:bg-[#6E41E2] after:shadow-[0_0_12px_rgba(110,65,226,0.65)] after:transition-transform after:duration-300 after:ease-out hover:font-bold hover:text-[#6E41E2] hover:drop-shadow-[0_0_10px_rgba(110,65,226,0.45)] hover:after:scale-x-100 focus-visible:font-bold focus-visible:text-[#6E41E2] focus-visible:outline-none focus-visible:drop-shadow-[0_0_10px_rgba(110,65,226,0.45)] focus-visible:after:scale-x-100"
             >
               {link.label}
             </a>

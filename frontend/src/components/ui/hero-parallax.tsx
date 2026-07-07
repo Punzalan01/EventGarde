@@ -36,12 +36,16 @@ const heroTextMotion: Variants = {
   hidden: {
     opacity: 0,
     x: -56,
+    transition: {
+      duration: 1.1,
+      ease: [0.22, 1, 0.36, 1],
+    },
   },
   visible: (delay = 0) => ({
     opacity: 1,
     x: 0,
     transition: {
-      duration: 0.85,
+      duration: 1.45,
       ease: [0.22, 1, 0.36, 1],
       delay,
     },
@@ -174,7 +178,7 @@ export function Header({
       </motion.h1>
       <motion.p
         variants={heroTextMotion}
-        custom={0.12}
+        custom={0.22}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: false, amount: 0.5 }}

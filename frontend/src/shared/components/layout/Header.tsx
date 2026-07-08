@@ -4,9 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/shared/hooks/useAuth';
 import { GradientButton } from '@/shared/components/ui/gradient-button';
 import { RoleType } from './navigation.config';
-import { X } from 'lucide-react';
-import PricingTable from '@/components/ui/modern-pricing-table';
-import { usePricingViewModel } from '@/features/subscriptions/viewmodels/usePricingViewModel';
+import { X, Check, QrCode, Search } from 'lucide-react';
 
 interface HeaderProps {
   onMenuToggle: () => void;
@@ -20,7 +18,6 @@ export function Header({ onMenuToggle, isDesktopVisible = true, isMobileOpen = f
   const navigate = useNavigate();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [showPricingModal, setShowPricingModal] = useState(false);
-  const { plans } = usePricingViewModel();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -69,9 +66,6 @@ export function Header({ onMenuToggle, isDesktopVisible = true, isMobileOpen = f
           >
             <HamburgerMenuIcon className="w-5 h-5" />
           </button>
-          <h2 className="text-[#5833B5] font-bold text-xl hidden sm:block tracking-tight">
-            {role === 'personal' ? 'Dashboard Overview' : role === 'organizer' ? 'Organizer Workspace' : role === 'vendor' ? 'Vendor Storefront' : 'Admin'}
-          </h2>
         </div>
 
         <div className="flex items-center gap-3 md:gap-6">
@@ -124,6 +118,18 @@ export function Header({ onMenuToggle, isDesktopVisible = true, isMobileOpen = f
                 <div className="px-4 py-3 border-b border-[#F3E8FF] bg-[#FAFAFC]">
                   <p className="text-sm font-bold text-[#111827] truncate">{profile?.full_name || 'User'}</p>
                   <p className="text-xs font-medium text-[#6B7280] truncate mt-0.5">{profile?.email}</p>
+                  <div className="mt-3 px-3 py-2 bg-[#F3E8FF]/50 rounded-lg flex items-center justify-between">
+                    <span className="text-xs font-semibold text-[#5833B5]">Events Joined</span>
+                    <span className="text-sm font-bold text-[#6E41E2]">3</span>
+                  </div>
+                  <button className="w-full bg-[#111827] text-white rounded-lg flex items-center h-9 overflow-hidden mt-3 hover:bg-black transition-colors">
+                    <div className="flex items-center justify-center px-3 h-full border-r border-white/20">
+                      <QrCode className="w-4 h-4" />
+                    </div>
+                    <div className="flex items-center justify-center font-semibold text-sm flex-1">
+                      Verify Identity
+                    </div>
+                  </button>
                 </div>
                 <div className="p-2 border-b border-[#F3E8FF]">
                   <div className="px-2 py-1 mb-1 text-[10px] font-bold text-[#6B7280] uppercase tracking-wider">
@@ -176,24 +182,84 @@ export function Header({ onMenuToggle, isDesktopVisible = true, isMobileOpen = f
 
       {/* Pricing Modal */}
       {showPricingModal && (
-        <div className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-black/50 backdrop-blur-sm p-4 pt-10">
-          <div className="relative w-full max-w-6xl bg-[#FAFAFC] rounded-3xl shadow-2xl overflow-hidden">
+        <div 
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 backdrop-blur-md bg-white/30"
+          onClick={() => setShowPricingModal(false)}
+        >
+          <div 
+            className="relative bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-gray-100 p-8 md:p-12 max-w-5xl w-full text-center"
+            onClick={(e) => e.stopPropagation()}
+          >
             <button
               onClick={() => setShowPricingModal(false)}
               className="absolute top-5 right-5 z-10 p-2 rounded-full bg-white shadow-md hover:shadow-lg text-[#4B5563] hover:text-[#111827] transition-all"
             >
               <X className="w-5 h-5" />
             </button>
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_8%,rgba(110,65,226,0.18),transparent_32%),radial-gradient(circle_at_88%_24%,rgba(255,241,232,0.76),transparent_30%),linear-gradient(180deg,#FFFFFF_0%,#FAFAFC_64%,#F0EBFF_100%)]"
-            />
-            <div className="pt-8 pb-12 px-4">
-              <PricingTable
-                plans={plans}
-                title="Upgrade to Organizer Access"
-                description="Unlock powerful event creation, vendor management, and ticketing tools. Choose a plan that scales with your events."
-              />
+            <h2 className="text-[#111827] font-extrabold text-3xl md:text-4xl tracking-tight mb-4">
+              Upgrade to Organizer Access
+            </h2>
+            <p className="text-gray-500 mb-10 max-w-2xl mx-auto text-sm md:text-base">
+              Unlock powerful event creation, vendor management, and ticketing tools. Choose a plan that scales with your events.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+              {/* Starter Tier */}
+              <div className="p-6 rounded-2xl border border-gray-200 bg-white shadow-sm flex flex-col">
+                <h3 className="font-bold text-xl text-[#111827] mb-2">Starter</h3>
+                <div className="text-3xl font-extrabold text-[#111827] mb-1"><span className="text-2xl">₱</span>1,499<span className="text-base text-gray-500 font-medium">/mo</span></div>
+                <p className="text-sm text-gray-500 mb-6">For independent coordinators and milestone hosts running private social events.</p>
+                <ul className="space-y-3 mb-8 flex-1">
+                  {['Private and unlisted events only', 'Strict RSVP matching by verified email or mobile', 'Up to 300 PAX per event', 'Full access to browse and book marketplace vendors', 'Optional customization add-ons for advanced layouts'].map(feature => (
+                    <li key={feature} className="flex items-start text-sm text-gray-600 gap-3">
+                      <Check className="w-4 h-4 text-[#6E41E2] shrink-0 mt-0.5" /> <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <button
+                  className="w-full py-3 rounded-xl border border-gray-200 font-bold text-[#111827] hover:bg-gray-50 transition-colors"
+                  onClick={() => setShowPricingModal(false)}
+                >
+                  Get Started
+                </button>
+              </div>
+
+              {/* Professional Tier */}
+              <div className="p-6 rounded-2xl border-2 border-[#6E41E2] bg-[#FAFAFC] shadow-md flex flex-col relative overflow-hidden">
+                <div className="absolute top-0 right-0 bg-[#6E41E2] text-white text-[10px] font-bold uppercase px-3 py-1 rounded-bl-lg tracking-wider">
+                  Recommended
+                </div>
+                <h3 className="font-bold text-xl text-[#111827] mb-2">Professional</h3>
+                <div className="text-3xl font-extrabold text-[#111827] mb-1"><span className="text-2xl">₱</span>4,999<span className="text-base text-gray-500 font-medium">/mo</span></div>
+                <p className="text-sm text-gray-500 mb-6">For corporations, campuses, SMEs, and agencies that need public or internal events.</p>
+                <ul className="space-y-3 mb-8 flex-1">
+                  {['Internal or public Discovery Page listing option', 'Custom registration and feedback forms', 'Ticket tiers, attendee analytics, and revenue tracking', 'Multi-user collaboration with up to 5 Admin seats', 'Vendor inquiries, chat, booking requests, and payments'].map(feature => (
+                    <li key={feature} className="flex items-start text-sm text-gray-600 gap-3">
+                      <Check className="w-4 h-4 text-[#6E41E2] shrink-0 mt-0.5" /> <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <button className="w-full py-3 rounded-xl bg-[#6E41E2] text-white font-bold hover:bg-[#5833B5] transition-colors shadow-soft">
+                  Choose Professional
+                </button>
+              </div>
+
+              {/* Enterprise Tier */}
+              <div className="p-6 rounded-2xl border border-gray-200 bg-white shadow-sm flex flex-col">
+                <h3 className="font-bold text-xl text-[#111827] mb-2">Enterprise</h3>
+                <div className="text-3xl font-extrabold text-[#111827] mb-1"><span className="text-2xl">₱</span>14,999<span className="text-base text-gray-500 font-medium">/mo</span></div>
+                <p className="text-sm text-gray-500 mb-6">For festivals, expos, trade fairs, and large public event operations.</p>
+                <ul className="space-y-3 mb-8 flex-1">
+                  {['Unlimited PAX capacity', 'Global Discovery Page spotlight listing', 'Public ticket sales through PayMongo', 'Advanced RBAC and unlimited workspace seats', 'Enterprise-scale ticketing, analytics, and QR scanning'].map(feature => (
+                    <li key={feature} className="flex items-start text-sm text-gray-600 gap-3">
+                      <Check className="w-4 h-4 text-[#111827] shrink-0 mt-0.5" /> <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <button className="w-full py-3 rounded-xl bg-[#111827] text-white font-bold hover:bg-black transition-colors">
+                  Plan Enterprise
+                </button>
+              </div>
             </div>
           </div>
         </div>

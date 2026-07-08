@@ -8,7 +8,7 @@ import { useSearchParams } from 'react-router-dom';
 
 export function OrganizerDashboardView() {
   const { stats, teamMembers, vendorPipeline } = useOrganizerDashboardViewModel();
-  const { defaultWorkspace, profile, isDemoAccount } = useAuth();
+  const { defaultWorkspace, profile } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   const [isDismissed, setIsDismissed] = React.useState(false);
 
@@ -20,7 +20,7 @@ export function OrganizerDashboardView() {
     }
   }, [searchParams, setSearchParams]);
 
-  const isUnauthorized = defaultWorkspace?.tier === 'free' && profile?.primary_intent !== 'organizer' && !isDemoAccount && !isDismissed;
+  const isUnauthorized = defaultWorkspace?.tier === 'free' && profile?.primary_intent !== 'organizer' && !isDismissed;
 
   return (
     <div className="min-h-screen font-sans text-[#4B5563] relative overflow-hidden will-change-transform" style={{ contain: 'paint' }}>

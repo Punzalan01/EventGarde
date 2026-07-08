@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { usePersonalDashboardViewModel } from '../viewmodels/usePersonalDashboardViewModel';
 import { TopEvent, UpcomingEvent } from '../models/personal.model';
 import { Search, MapPin, Calendar, QrCode, Lock, ChevronRight, Ticket, X, ShieldAlert, ShieldCheck, ArrowRight, Star, Plus } from 'lucide-react';
@@ -14,9 +15,11 @@ import { GradientButton } from '@/shared/components/ui/gradient-button';
 import { CoachSchedulingCard } from '@/shared/components/ui/coach-scheduling-card';
 import { IdentityCard } from '@/shared/components/ui/identity-card';
 import { SimpleFooter } from '@/shared/components/ui/simple-footer';
+import { BookmarkIconButton } from '@/components/ui/bookmark-icon-button';
 import { AnimatePresence, motion } from 'framer-motion';
 
 export function PersonalDashboardView() {
+  const navigate = useNavigate();
   const { profile } = useAuth();
   const {
     showRsvpGate,
@@ -38,20 +41,23 @@ export function PersonalDashboardView() {
     handleJoinEvent,
   } = usePersonalDashboardViewModel();
 
-  const upcomingEventsCards = upcomingEvents.map((event: UpcomingEvent) => ({
+  const upcomingEventsCards = upcomingEvents.slice(0, 4).map((event: UpcomingEvent) => ({
     id: event.id,
     title: event.title,
     description: event.description,
     date: event.date,
     content: (
       <>
-        <GradientButton
-          variant="variant"
-          className="absolute top-0 right-0 !px-4 !py-2 !min-w-fit text-xs md:text-sm"
-          onClick={(e: React.MouseEvent) => handleJoinEvent(event.title, e)}
-        >
-          RSVP Now
-        </GradientButton>
+        <div className="absolute top-0 right-0 flex items-center gap-2">
+          <BookmarkIconButton />
+          <GradientButton
+            variant="variant"
+            className="!px-4 !py-2 !min-w-fit text-xs md:text-sm shadow-sm"
+            onClick={(e: React.MouseEvent) => handleJoinEvent(event.title, e)}
+          >
+            RSVP Now
+          </GradientButton>
+        </div>
         <div>
           <p className="font-bold md:text-4xl text-xl text-white">{event.title}</p>
           <p className="font-normal text-base text-white">{event.description}</p>
@@ -80,75 +86,43 @@ export function PersonalDashboardView() {
               <AgentPlan />
             </div>
 
-            <button className="w-fit bg-[#111827] text-white rounded-lg flex items-center h-10 overflow-hidden mt-2 hover:bg-black transition-colors">
-              <div className="flex items-center justify-center px-3 h-full border-r border-white/20">
-                <QrCode className="w-4 h-4" />
-              </div>
-              <div className="flex items-center justify-center font-semibold text-sm px-4">
-                Verify Identity
-              </div>
-            </button>
           </div>
         </div>
 
         {/* Fixed Right Sidebar: Identity Card */}
-        <div className="hidden lg:block fixed right-4 lg:right-8 top-20 z-30 h-[calc(100vh-80px)] overflow-y-auto no-scrollbar">
-          <IdentityCard />
-        </div>
+
 
         {/* Main Content (Top Events & Others) */}
         <div className="w-full flex flex-col space-y-10">
 
-          {/* Top Events (Tabular Animated List) */}
-          <div className="w-full mb-8">
-            <h3 className="text-[#111827] font-bold text-2xl tracking-tight mb-4">Top Events</h3>
-            <div className="bg-white/60 backdrop-blur-xl rounded-2xl border border-gray-100 shadow-sm overflow-hidden relative z-0 h-[250px]">
-              <AnimatedList<TopEvent>
-                items={topEvents.slice(0, 15)}
-                renderItem={(event, index, isSelected) => (
-                  <div className={`flex items-center gap-6 px-6 py-3 rounded-xl transition-colors ${isSelected ? 'bg-[#F0EBFF]' : ''
-                    }`}>
-                    <span className={`text-base font-bold w-8 text-center ${event.rank <= 3 ? 'text-[#6E41E2]' : 'text-gray-400'
-                      }`}>
-                      #{event.rank}
-                    </span>
-                    <div className="flex-1 grid grid-cols-1 md:grid-cols-5 gap-4 items-center min-w-0">
-                      <p className="text-[#111827] font-bold text-base truncate">{event.name}</p>
-                      <p className="text-gray-500 text-sm hidden md:block">{event.category}</p>
-                      <div className="hidden md:flex items-center gap-1.5 text-yellow-400">
-                        <Star className="w-4 h-4 fill-current" />
-                        <span className="text-sm font-bold text-[#111827]">{event.rating || '4.9'}</span>
-                      </div>
-                      <div className="hidden md:flex items-center gap-1.5 text-gray-500">
-                        <MapPin className="w-4 h-4" />
-                        <span className="text-sm font-medium truncate">{event.location}</span>
-                      </div>
-                      <p className="text-sm font-medium text-gray-500 justify-self-start md:justify-self-end">
-                        <span className="font-bold text-[#6E41E2]">{event.attendees}</span> attendees
-                      </p>
-                    </div>
-                  </div>
-                )}
-                onItemSelect={(event, index) => console.log('Selected:', event.name)}
-                showGradients={true}
-                enableArrowNavigation={false}
-                displayScrollbar={false}
-              />
+          <div>
+            <div className="flex items-center gap-4 mb-2">
+              <h1 className="text-4xl md:text-5xl font-extrabold text-[#111827] tracking-tight">Dashboard Overview</h1>
+              <span className="px-3 py-1 bg-[#F0EBFF] text-[#6E41E2] font-bold text-sm rounded-full shadow-sm border border-[#D6BCFA]">
+                {joinedEvents.length} Entries
+              </span>
             </div>
+            <p className="text-gray-500 mb-8">Welcome back! Here's a snapshot of your events and activities.</p>
           </div>
 
-          {/* My Event Itinerary (Gallery4) */}
+          {/* Joined Events (Gallery4) */}
           <Gallery4
-            title="My Event Itinerary"
-            description="Access your confirmed tickets, private event RSVPs, and personalized schedules."
+            title="Joined Events"
+            description="Access the events you have registered or RSVP'd to."
             items={joinedEvents}
           />
 
           {/* Upcoming Events Grid */}
           <div className="w-full flex flex-col">
-            <div className="flex items-center justify-between shrink-0 mb-6">
-              <h2 className="text-[#111827] font-bold text-2xl tracking-tight">Upcoming Events</h2>
-              <button className="text-sm font-semibold text-[#6E41E2] hover:text-[#5833B5] flex items-center transition-colors">
+            <div className="flex items-end justify-between shrink-0 mb-6">
+              <div className="flex flex-col">
+                <h2 className="text-[#111827] font-bold text-2xl tracking-tight mb-2">Discover Public Events</h2>
+                <p className="text-gray-500 text-sm md:text-base max-w-2xl">Browse and join publicly available events in the directory.</p>
+              </div>
+              <button
+                onClick={() => navigate('discovery')}
+                className="text-sm font-semibold text-[#6E41E2] hover:text-[#5833B5] flex items-center transition-colors mb-1"
+              >
                 View Directory <ArrowRight className="w-4 h-4 ml-1" />
               </button>
             </div>

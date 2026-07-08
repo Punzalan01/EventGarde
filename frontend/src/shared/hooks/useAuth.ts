@@ -7,7 +7,5 @@ export function useAuth() {
     throw new Error('useAuth must be used within AuthProvider.')
   }
 
-  const isDemoAccount = context.user?.email === 'demo@user.com'
-
-  return { ...context, isDemoAccount }
+  return context
 }

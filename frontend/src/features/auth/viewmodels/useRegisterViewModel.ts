@@ -1,5 +1,8 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import type { RegisterFormState } from '@/features/auth/models/auth.model'
+import * as authService from '@/features/auth/services/auth.service'
+import { useAuth } from '@/shared/hooks/useAuth'
 
 const initialRegisterForm: RegisterFormState = {
   fullName: '',
@@ -11,6 +14,8 @@ const initialRegisterForm: RegisterFormState = {
 }
 
 export function useRegisterViewModel() {
+  const navigate = useNavigate()
+  const { setAuthMetadata } = useAuth()
   const [form, setForm] = useState<RegisterFormState>(initialRegisterForm)
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -31,23 +36,30 @@ export function useRegisterViewModel() {
     setShowPassword((currentValue) => !currentValue)
   }
 
-  const submitRegistration = (e: React.FormEvent) => {
+  const submitRegistration = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
     setStatus('')
-    setTimeout(() => {
+    try {
+      const result = await authService.register(form)
+      if (result.status === 'confirmation_required') {
+        setStatus(result.message ?? 'Please check your email to confirm your account.')
+        return
+      }
+
+      setAuthMetadata(result)
+      navigate('/workspace')
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : 'Unable to create account.')
+    } finally {
       setIsLoading(false)
-      setStatus('Sign up is ready to connect to the EventGarde API.')
-    }, 1500)
+    }
   }
 
   const registerWithGoogle = () => {
     setIsGoogleLoading(true)
     setStatus('')
-    setTimeout(() => {
-      setIsGoogleLoading(false)
-      setStatus('Google Sign Up is ready to connect.')
-    }, 1500)
+    authService.redirectToGoogle()
   }
 
   return {

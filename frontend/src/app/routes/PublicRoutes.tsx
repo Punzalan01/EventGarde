@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import { PublicLayout } from '@/app/layouts/PublicLayout'
 import { AuthRoutes } from '@/app/routes/AuthRoutes'
+import { UserRoutes } from '@/app/routes/UserRoutes'
 import { LandingPageView } from '@/features/landing/views/LandingPageView'
 import { PricingView } from '@/features/subscriptions/views/PricingView'
 
@@ -12,6 +13,7 @@ export function PublicRoutes() {
         <Route path="pricing" element={<PricingView />} />
       </Route>
       {AuthRoutes()}
+      {UserRoutes()}
     </Routes>
   )
 }

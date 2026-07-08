@@ -123,10 +123,10 @@ const session = {
 let app: Awaited<typeof import('../src/app')>['app']
 
 function migrationSql() {
-  const root = process.cwd().endsWith('backend')
-    ? path.resolve(process.cwd(), '..')
-    : process.cwd()
-  const migrationsDir = path.join(root, 'supabase/migrations')
+  const backendRoot = process.cwd().endsWith('backend')
+    ? process.cwd()
+    : path.join(process.cwd(), 'backend')
+  const migrationsDir = path.join(backendRoot, 'supabase/migrations')
 
   return fs.readdirSync(migrationsDir)
     .filter((file) => file.endsWith('.sql'))

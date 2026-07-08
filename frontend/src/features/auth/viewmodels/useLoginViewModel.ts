@@ -1,5 +1,8 @@
 import { FormEvent, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import type { LoginFormState } from '@/features/auth/models/auth.model'
+import * as authService from '@/features/auth/services/auth.service'
+import { useAuth } from '@/shared/hooks/useAuth'
 
 const initialLoginForm: LoginFormState = {
   email: '',
@@ -8,6 +11,8 @@ const initialLoginForm: LoginFormState = {
 }
 
 export function useLoginViewModel() {
+  const navigate = useNavigate()
+  const { setAuthMetadata } = useAuth()
   const [form, setForm] = useState<LoginFormState>(initialLoginForm)
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -28,23 +33,25 @@ export function useLoginViewModel() {
     setShowPassword((currentValue) => !currentValue)
   }
 
-  const submitLogin = (event: FormEvent<HTMLFormElement>) => {
+  const submitLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setIsLoading(true)
     setStatus('')
-    setTimeout(() => {
+    try {
+      const result = await authService.login(form)
+      setAuthMetadata(result)
+      navigate('/workspace')
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : 'Unable to log in.')
+    } finally {
       setIsLoading(false)
-      setStatus('Login is ready to connect to the EventGarde API.')
-    }, 1500)
+    }
   }
 
   const loginWithGoogle = () => {
     setIsGoogleLoading(true)
     setStatus('')
-    setTimeout(() => {
-      setIsGoogleLoading(false)
-      setStatus('Google Sign In is ready to connect.')
-    }, 1500)
+    authService.redirectToGoogle()
   }
 
   return {

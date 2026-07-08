@@ -30,7 +30,7 @@ export function RegisterForm() {
             Sign up for EventGarde
           </h2>
           <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-[#4B5563]">
-            Join us to start managing events, bookings, and guest access effortlessly.
+            Join us to start managing events, bookings, and personal access effortlessly.
           </p>
         </div>
 

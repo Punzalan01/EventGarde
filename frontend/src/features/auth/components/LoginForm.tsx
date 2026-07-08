@@ -30,7 +30,7 @@ export function LoginForm() {
             Log in to EventGarde
           </h2>
           <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-[#4B5563]">
-            Continue managing events, bookings, verification, and guest access.
+            Continue managing events, bookings, verification, and personal access.
           </p>
         </div>
 

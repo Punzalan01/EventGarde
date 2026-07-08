@@ -1,9 +1,9 @@
 import { Outlet } from 'react-router-dom'
 import { DashboardLayout } from '@/shared/components/layout/DashboardLayout'
 
-export function OrganizerLayout() {
+export function PersonalLayout() {
   return (
-    <DashboardLayout role="organizer">
+    <DashboardLayout role="personal">
       <Outlet />
     </DashboardLayout>
   )

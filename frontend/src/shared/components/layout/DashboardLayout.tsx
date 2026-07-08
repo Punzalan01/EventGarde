@@ -21,7 +21,7 @@ export function DashboardLayout({ role, children }: DashboardLayoutProps) {
   };
 
   return (
-    <div className="flex min-h-screen bg-[#FAFAFC] font-sans">
+    <div className={`flex min-h-screen font-sans ${role === 'personal' ? 'bg-transparent' : 'bg-[#FAFAFC]'}`}>
       <Sidebar 
         role={role} 
         isDesktopVisible={isSidebarVisible} 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { RoleType, NavigationConfig } from './navigation.config';
 import { X } from 'lucide-react';
 
@@ -12,6 +12,7 @@ interface SidebarProps {
 }
 
 export function Sidebar({ role, isDesktopVisible, isMobileOpen, onMobileClose, onDesktopClose }: SidebarProps) {
+  const { workspaceId } = useParams<{ workspaceId: string }>();
   const links = NavigationConfig[role] || [];
 
   return (
@@ -36,9 +37,9 @@ export function Sidebar({ role, isDesktopVisible, isMobileOpen, onMobileClose, o
         `}
         style={{ backfaceVisibility: 'hidden' }}
       >
-        <div className="flex flex-col h-full w-64">
+        <div className="flex flex-col h-full w-64 relative">
           {/* Logo / Brand Area */}
-          <div className="h-16 flex items-center px-4 border-b border-gray-100 justify-between">
+          <div className="h-16 flex items-center px-4 border-b border-gray-100 justify-between shrink-0">
             <div className="flex items-center gap-3 overflow-hidden whitespace-nowrap">
               <div className="w-10 h-10 flex items-center justify-center shrink-0">
                 <img src="/logo.png" alt="EventGarde Logo" className="w-8 h-8 object-contain" />
@@ -49,11 +50,11 @@ export function Sidebar({ role, isDesktopVisible, isMobileOpen, onMobileClose, o
             </div>
             {/* Close buttons */}
             <div className="flex items-center">
-              <button className="md:hidden text-gray-400 hover:text-[#111827] p-2 rounded-lg hover:bg-gray-100 transition-colors shrink-0" onClick={onMobileClose}>
+              <button className="md:hidden text-gray-400 hover:text-[#111827] p-1 rounded hover:bg-gray-200 transition-colors shrink-0" onClick={(e) => { e.stopPropagation(); onMobileClose(); }}>
                 <X className="w-5 h-5" />
               </button>
               {onDesktopClose && (
-                <button className="hidden md:block text-gray-400 hover:text-[#111827] p-2 rounded-lg hover:bg-gray-100 transition-colors shrink-0" onClick={onDesktopClose}>
+                <button className="hidden md:block text-gray-400 hover:text-[#111827] p-1 rounded hover:bg-gray-200 transition-colors shrink-0" onClick={(e) => { e.stopPropagation(); onDesktopClose(); }}>
                   <X className="w-5 h-5" />
                 </button>
               )}
@@ -68,21 +69,38 @@ export function Sidebar({ role, isDesktopVisible, isMobileOpen, onMobileClose, o
               }
               
               const Icon = link.icon!;
+              let finalPath = link.path!;
+              if (workspaceId) {
+                if (finalPath.startsWith('/personal')) finalPath = finalPath.replace('/personal', `/personal/${workspaceId}`);
+                else if (finalPath.startsWith('/organizer')) finalPath = finalPath.replace('/organizer', `/organizer/${workspaceId}`);
+                else if (finalPath.startsWith('/vendor')) finalPath = finalPath.replace('/vendor', `/vendor/${workspaceId}`);
+              }
+
               return (
                 <NavLink
-                  key={link.path || index}
-                  to={link.path!}
-                  end={link.path === '/organizer' || link.path === '/personal' || link.path === '/vendor'}
+                  key={finalPath || index}
+                  to={finalPath}
+                  end={finalPath === `/personal/${workspaceId}` || finalPath === `/organizer/${workspaceId}` || finalPath === `/vendor/${workspaceId}`}
                   className={({ isActive }) => `
-                    flex items-center gap-3 px-3 py-2 rounded-md transition-all text-sm
+                    flex items-center gap-3 px-3 py-2.5 rounded-md transition-all text-sm relative overflow-hidden
                     ${isActive
-                      ? 'bg-gray-100/80 text-[#2D3748] font-semibold'
-                      : 'text-[#4B5563] hover:bg-gray-100 hover:text-[#2D3748] font-normal'
+                      ? 'bg-[#F0EBFF]/60 text-[#2D3748] font-bold'
+                      : 'text-[#4B5563] hover:bg-gray-100 hover:text-[#2D3748] font-medium'
                     }
                   `}
                 >
-                  <Icon className="w-[18px] h-[18px] shrink-0 text-gray-500" strokeWidth={2} />
-                  <span className="whitespace-nowrap">{link.label}</span>
+                  {({ isActive }) => (
+                    <>
+                      {isActive && (
+                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#6E41E2]" />
+                      )}
+                      <Icon 
+                        className={`w-[18px] h-[18px] shrink-0 ${isActive ? 'text-[#6E41E2]' : 'text-gray-500'}`} 
+                        strokeWidth={isActive ? 2.5 : 2} 
+                      />
+                      <span className="whitespace-nowrap">{link.label}</span>
+                    </>
+                  )}
                 </NavLink>
               );
             })}

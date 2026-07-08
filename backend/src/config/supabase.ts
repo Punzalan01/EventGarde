@@ -6,6 +6,7 @@ const authClientOptions = {
     autoRefreshToken: false,
     detectSessionInUrl: false,
     persistSession: false,
+    flowType: 'pkce',
   },
 }
 

@@ -48,7 +48,12 @@ export function useRegisterViewModel() {
       }
 
       setAuthMetadata(result)
-      navigate('/workspace')
+      const workspaceId = result.default_workspace?.id
+      if (workspaceId) {
+        navigate(`/personal/${workspaceId}`)
+      } else {
+        navigate('/login?error=no_workspace')
+      }
     } catch (error) {
       setStatus(error instanceof Error ? error.message : 'Unable to create account.')
     } finally {

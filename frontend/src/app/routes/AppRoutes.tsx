@@ -1,4 +1,4 @@
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Routes } from 'react-router-dom'
 import { PublicRoutes } from '@/app/routes/PublicRoutes'
 import { OrganizerRoutes } from '@/app/routes/OrganizerRoutes'
 import { PersonalRoutes } from '@/app/routes/PersonalRoutes'
@@ -12,10 +12,12 @@ export function AppRoutes() {
         v7_relativeSplatPath: true,
       }}
     >
-      <PublicRoutes />
-      <OrganizerRoutes />
-      <PersonalRoutes />
-      <VendorRoutes />
+      <Routes>
+        {PublicRoutes()}
+        {OrganizerRoutes()}
+        {PersonalRoutes()}
+        {VendorRoutes()}
+      </Routes>
     </BrowserRouter>
   )
 }

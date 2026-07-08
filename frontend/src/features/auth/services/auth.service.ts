@@ -73,6 +73,7 @@ export function login(form: LoginFormState) {
     body: JSON.stringify({
       email: form.email,
       password: form.password,
+      rememberMe: form.rememberMe,
     }),
   })
 }

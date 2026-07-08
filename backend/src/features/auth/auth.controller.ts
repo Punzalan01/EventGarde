@@ -3,6 +3,7 @@ import { env } from '../../config/env'
 import {
   ACCESS_COOKIE_NAME,
   REFRESH_COOKIE_NAME,
+  SESSION_COOKIE_NAME,
 } from '../../config/cookies'
 import { AppError } from '../../shared/utils/AppError'
 import {
@@ -53,15 +54,21 @@ export async function callback(req: Request, res: Response) {
   }
 
   try {
-    await authService.completeOAuthCallback(code, res)
-    res.redirect(`${env.FRONTEND_URL}/workspace`)
+    const metadata = await authService.completeOAuthCallback(code, res)
+    const workspaceId = metadata.default_workspace?.id
+    if (workspaceId) {
+      res.redirect(`${env.FRONTEND_URL}/personal/${workspaceId}`)
+    } else {
+      res.redirect(`${env.FRONTEND_URL}/login?auth_error=no_workspace`)
+    }
   } catch {
     res.redirect(`${env.FRONTEND_URL}/login?auth_error=oauth_callback_failed`)
   }
 }
 
 export async function refresh(req: Request, res: Response) {
-  const result = await authService.refreshSession(req.cookies?.[REFRESH_COOKIE_NAME], res)
+  const isSessionCookie = req.cookies?.[SESSION_COOKIE_NAME] === '1'
+  const result = await authService.refreshSession(req.cookies?.[REFRESH_COOKIE_NAME], res, isSessionCookie)
   res.status(200).json(result)
 }
 

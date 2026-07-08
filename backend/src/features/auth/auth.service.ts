@@ -4,6 +4,7 @@ import { env } from '../../config/env'
 import {
   ACCESS_COOKIE_NAME,
   REFRESH_COOKIE_NAME,
+  SESSION_COOKIE_NAME,
   accessCookieOptions,
   clearAuthCookies,
   refreshCookieOptions,
@@ -34,17 +35,28 @@ function requireSession(session: Session | null, message = 'Authentication faile
   return session
 }
 
-function setSessionCookies(res: Response, session: Session) {
+function setSessionCookies(res: Response, session: Session, sessionCookie = false) {
   res.cookie(
     ACCESS_COOKIE_NAME,
     session.access_token,
-    accessCookieOptions(session.expires_in),
+    accessCookieOptions(session.expires_in, sessionCookie),
   )
   res.cookie(
     REFRESH_COOKIE_NAME,
     session.refresh_token,
-    refreshCookieOptions(),
+    refreshCookieOptions(sessionCookie),
   )
+  if (sessionCookie) {
+    res.cookie(SESSION_COOKIE_NAME, '1', {
+      ...accessCookieOptions(undefined, true),
+      httpOnly: true,
+    })
+  } else {
+    res.clearCookie(SESSION_COOKIE_NAME, {
+      ...accessCookieOptions(undefined, true),
+      maxAge: undefined,
+    })
+  }
 }
 
 async function metadataForAuthenticatedUser(user: User): Promise<AuthMetadata> {
@@ -99,7 +111,8 @@ export async function login(input: LoginInput, res: Response): Promise<AuthRespo
   }
 
   const session = requireSession(data.session)
-  setSessionCookies(res, session)
+  const sessionCookie = input.rememberMe === false
+  setSessionCookies(res, session, sessionCookie)
 
   return {
     status: 'authenticated',
@@ -194,7 +207,7 @@ export async function getGoogleProviderUrl() {
   return data.url
 }
 
-export async function completeOAuthCallback(code: string, res: Response) {
+export async function completeOAuthCallback(code: string, res: Response): Promise<AuthMetadata> {
   const { data, error } = await supabaseAuth.auth.exchangeCodeForSession(code)
 
   if (error) {
@@ -203,10 +216,10 @@ export async function completeOAuthCallback(code: string, res: Response) {
 
   const session = requireSession(data.session, 'OAuth callback did not create a session.')
   setSessionCookies(res, session)
-  await metadataForAuthenticatedUser(session.user)
+  return metadataForAuthenticatedUser(session.user)
 }
 
-export async function refreshSession(refreshToken: string | undefined, res: Response): Promise<AuthResponse> {
+export async function refreshSession(refreshToken: string | undefined, res: Response, isSessionCookie = false): Promise<AuthResponse> {
   if (!refreshToken) {
     throw new AppError(401, 'Refresh token is missing.', 'REFRESH_TOKEN_MISSING')
   }
@@ -221,7 +234,7 @@ export async function refreshSession(refreshToken: string | undefined, res: Resp
   }
 
   const session = requireSession(data.session, 'Session refresh failed.')
-  setSessionCookies(res, session)
+  setSessionCookies(res, session, isSessionCookie)
 
   return {
     status: 'authenticated',

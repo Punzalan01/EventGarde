@@ -1,8 +1,10 @@
 import { 
-  LayoutDashboard, Calendar, Users, Settings, MessageSquare, Ticket, ShoppingBag, 
-  Briefcase, FileText, Home, Compass, Info, Wallet, Mail, Shield, CheckCircle, 
-  Bookmark, Store, Bell, User, Sparkles, BarChart3, CreditCard, LineChart, PieChart 
-} from 'lucide-react';
+  DashboardIcon, CalendarIcon, PersonIcon, GearIcon, ChatBubbleIcon, 
+  LayersIcon, HomeIcon, MagnifyingGlassIcon, 
+  EnvelopeClosedIcon, LockClosedIcon, BookmarkIcon, CubeIcon, 
+  IdCardIcon, BarChartIcon 
+} from '@radix-ui/react-icons';
+import { Ticket } from 'lucide-react';
 
 export type RoleType = 'organizer' | 'personal' | 'vendor' | 'admin';
 
@@ -15,34 +17,34 @@ export interface NavItem {
 
 export const NavigationConfig: Record<RoleType, NavItem[]> = {
   organizer: [
-    { label: 'Dashboard', path: '/organizer', icon: LayoutDashboard },
-    { label: 'Events', path: '/organizer/events', icon: Calendar },
-    { label: 'Guests & RSVPs', path: '/organizer/guests', icon: Users },
+    { label: 'Dashboard', path: '/organizer', icon: DashboardIcon },
+    { label: 'Events', path: '/organizer/events', icon: CalendarIcon },
+    { label: 'Guests & RSVPs', path: '/organizer/guests', icon: PersonIcon },
     { label: 'Ticketing', path: '/organizer/ticketing', icon: Ticket },
-    { label: 'Marketplace', path: '/organizer/marketplace', icon: Store },
-    { label: 'My Bookings', path: '/organizer/bookings', icon: Briefcase },
-    { label: 'Team', path: '/organizer/team', icon: Shield },
-    { label: 'Analytics', path: '/organizer/analytics', icon: LineChart },
+    { label: 'Marketplace', path: '/organizer/marketplace', icon: CubeIcon },
+    { label: 'My Bookings', path: '/organizer/bookings', icon: LayersIcon },
+    { label: 'Team', path: '/organizer/team', icon: LockClosedIcon },
+    { label: 'Analytics', path: '/organizer/analytics', icon: BarChartIcon },
   ],
   personal: [
-    { label: 'Dashboard', path: '/personal', icon: Home },
-    { label: 'Discover', path: '/personal/discovery', icon: Compass },
-    { label: 'My Tickets', path: '/personal/tickets', icon: Wallet },
-    { label: 'RSVPs', path: '/personal/rsvp', icon: Mail },
-    { label: 'Saved', path: '/personal/saved', icon: Bookmark },
-    { label: 'Vendors', path: '/personal/vendors', icon: Store },
+    { label: 'Dashboard', path: '/personal', icon: HomeIcon },
+    { label: 'Discover', path: '/personal/discovery', icon: MagnifyingGlassIcon },
+    { label: 'My Tickets', path: '/personal/tickets', icon: Ticket },
+    { label: 'RSVPs', path: '/personal/rsvp', icon: EnvelopeClosedIcon },
+    { label: 'Saved', path: '/personal/saved', icon: BookmarkIcon },
+    { label: 'Vendors', path: '/personal/vendors', icon: CubeIcon },
   ],
   vendor: [
-    { label: 'Dashboard', path: '/vendor', icon: LayoutDashboard },
-    { label: 'Storefront', path: '/vendor/storefront', icon: Store },
-    { label: 'Messages', path: '/vendor/messages', icon: MessageSquare },
-    { label: 'Bookings', path: '/vendor/bookings', icon: Briefcase },
-    { label: 'Calendar', path: '/vendor/calendar', icon: Calendar },
-    { label: 'Payments', path: '/vendor/payments', icon: CreditCard },
+    { label: 'Dashboard', path: '/vendor', icon: DashboardIcon },
+    { label: 'Storefront', path: '/vendor/storefront', icon: CubeIcon },
+    { label: 'Messages', path: '/vendor/messages', icon: ChatBubbleIcon },
+    { label: 'Bookings', path: '/vendor/bookings', icon: LayersIcon },
+    { label: 'Calendar', path: '/vendor/calendar', icon: CalendarIcon },
+    { label: 'Payments', path: '/vendor/payments', icon: IdCardIcon },
   ],
   admin: [
-    { label: 'Dashboard', path: '/admin', icon: LayoutDashboard },
-    { label: 'Users', path: '/admin/users', icon: Users },
-    { label: 'Settings', path: '/admin/settings', icon: Settings },
+    { label: 'Dashboard', path: '/admin', icon: DashboardIcon },
+    { label: 'Users', path: '/admin/users', icon: PersonIcon },
+    { label: 'Settings', path: '/admin/settings', icon: GearIcon },
   ]
 };

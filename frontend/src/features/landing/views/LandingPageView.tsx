@@ -1,5 +1,6 @@
 import { Navbar } from '@/features/landing/components/Navbar'
 import { HeroSection } from '@/features/landing/components/HeroSection'
+import { AboutSection } from '@/features/landing/components/AboutSection'
 import { AttendeeSection } from '@/features/landing/components/AttendeeSection'
 import { OrganizerSection } from '@/features/landing/components/OrganizerSection'
 import { VendorGrid } from '@/features/landing/components/VendorGrid'
@@ -13,6 +14,7 @@ export function LandingPageView() {
       <Navbar />
       <main>
         <HeroSection />
+        <AboutSection />
         <AttendeeSection />
         <OrganizerSection />
         <VendorGrid />

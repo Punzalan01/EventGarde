@@ -7,11 +7,12 @@ import { cn } from '@/utils/cn'
 
 export interface Plan {
   title: string
-  workspaceType: string
+  workspaceType?: string
   price: {
     monthly: number
     yearly: number
   }
+  customPriceLabel?: string
   description: string
   features: string[]
   ctaText: string
@@ -201,9 +202,11 @@ export default function PricingTable({
               >
                 <div className="mb-8 space-y-4 text-center">
                   <div>
-                    <p className="text-sm font-bold uppercase tracking-[0.14em] text-[#6E41E2]">
-                      {plan.workspaceType}
-                    </p>
+                    {plan.workspaceType && (
+                      <p className="text-sm font-bold uppercase tracking-[0.14em] text-[#6E41E2]">
+                        {plan.workspaceType}
+                      </p>
+                    )}
                     <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-[#111827]">
                       {plan.title}
                     </h2>
@@ -214,32 +217,40 @@ export default function PricingTable({
 
                   <div className="space-y-2">
                     <div className="flex items-center justify-center text-4xl font-extrabold tracking-tight text-[#111827]">
-                      <span>{currency}</span>
-                      <ScrollingNumber value={displayedMonthly} />
-                      <span className="ml-1 text-base font-semibold text-[#6B7280]">
-                        /month
-                      </span>
+                      {plan.customPriceLabel ? (
+                        <span>{plan.customPriceLabel}</span>
+                      ) : (
+                        <>
+                          <span>{currency}</span>
+                          <ScrollingNumber value={displayedMonthly} />
+                          <span className="ml-1 text-base font-semibold text-[#6B7280]">
+                            /month
+                          </span>
+                        </>
+                      )}
                     </div>
-                    <motion.div
-                      key={isYearly ? 'yearly' : 'monthly'}
-                      initial={{ opacity: 0, y: 5 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="flex min-h-6 flex-wrap items-center justify-center gap-2 text-sm text-[#6B7280]"
-                    >
-                      <span>
-                        {isYearly ? 'billed yearly' : 'billed monthly'}
-                      </span>
-                      {isYearly ? (
-                        <motion.span
-                          initial={{ opacity: 0, scale: 0.85 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-bold text-emerald-700"
-                        >
-                          Save {currency}
-                          {pesoFormatter.format(yearlySavings)}
-                        </motion.span>
-                      ) : null}
-                    </motion.div>
+                    {!plan.customPriceLabel && (
+                      <motion.div
+                        key={isYearly ? 'yearly' : 'monthly'}
+                        initial={{ opacity: 0, y: 5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="flex min-h-6 flex-wrap items-center justify-center gap-2 text-sm text-[#6B7280]"
+                      >
+                        <span>
+                          {isYearly ? 'billed yearly' : 'billed monthly'}
+                        </span>
+                        {isYearly ? (
+                          <motion.span
+                            initial={{ opacity: 0, scale: 0.85 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-bold text-emerald-700"
+                          >
+                            Save {currency}
+                            {pesoFormatter.format(yearlySavings)}
+                          </motion.span>
+                        ) : null}
+                      </motion.div>
+                    )}
                   </div>
                 </div>
 

@@ -35,6 +35,12 @@ export function LoginForm() {
         </div>
 
         <form className="mt-7 space-y-5" onSubmit={submitLogin}>
+          {status && (
+            <p className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-600">
+              {status}
+            </p>
+          )}
+
           <label className="block">
             <span className="text-sm font-semibold text-[#111827]">Email address</span>
             <span className="mt-2 flex h-12 items-center gap-3 rounded-xl border border-gray-200 bg-white px-4 transition focus-within:border-[#6E41E2] focus-within:ring-4 focus-within:ring-[#F0EBFF]">
@@ -139,12 +145,6 @@ export function LoginForm() {
             Sign in with Google
           </button>
         </div>
-
-        {status && (
-          <p className="mt-5 rounded-xl bg-[#F0EBFF] px-4 py-3 text-sm font-medium text-[#5833B5]">
-            {status}
-          </p>
-        )}
 
         <p className="mt-7 text-center text-sm text-[#4B5563]">
           New to EventGarde?{' '}

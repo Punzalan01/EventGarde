@@ -7,7 +7,17 @@
     "build": "tsc -p tsconfig.json",
     "start": "node dist/server.js",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "supabase": "supabase",
+    "supabase:start": "supabase start",
+    "supabase:stop": "supabase stop",
+    "supabase:status": "supabase status",
+    "supabase:link": "supabase link",
+    "supabase:db:push": "supabase db push",
+    "supabase:db:push:dry": "supabase db push --dry-run",
+    "supabase:db:reset": "supabase db reset",
+    "supabase:types:linked": "supabase gen types --linked --schema public > src/shared/types/database.types.ts",
+    "supabase:types:local": "supabase gen types --local --schema public > src/shared/types/database.types.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.55.0",
@@ -24,6 +34,7 @@
     "@types/express": "^4.17.21",
     "@types/node": "^22.10.2",
     "@types/supertest": "^6.0.2",
+    "supabase": "^2.109.1",
     "supertest": "^7.0.0",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",

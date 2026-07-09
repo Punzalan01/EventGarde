@@ -5,6 +5,24 @@ export function useTicketHistoryViewModel() {
   const allTickets = useMemo(() => getTickets(), []);
   const [statusFilter, setStatusFilter] = useState<'All' | 'Confirmed' | 'Pending' | 'Cancelled'>('All');
   const [searchQuery, setSearchQuery] = useState('');
+  
+  const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null);
+  const [isTicketModalOpen, setIsTicketModalOpen] = useState(false);
+
+  const selectedTicket = useMemo(() => {
+    if (!selectedTicketId) return null;
+    return allTickets.find(t => t.id === selectedTicketId) || null;
+  }, [allTickets, selectedTicketId]);
+
+  const openTicketModal = (id: string) => {
+    setSelectedTicketId(id);
+    setIsTicketModalOpen(true);
+  };
+
+  const closeTicketModal = () => {
+    setIsTicketModalOpen(false);
+    // intentionally leave selectedTicketId to allow exit animations
+  };
 
   const filteredTickets = useMemo(() => {
     return allTickets.filter((ticket) => {
@@ -19,7 +37,7 @@ export function useTicketHistoryViewModel() {
   const totalPaid = useMemo(() => {
     return allTickets
       .filter((t) => t.status === 'Confirmed' && t.amount !== 'Free')
-      .reduce((sum, t) => sum + parseFloat(t.amount.replace('$', '')), 0);
+      .reduce((sum, t) => sum + parseFloat(t.amount.replace('₱', '')), 0);
   }, [allTickets]);
 
   const stats = useMemo(() => ({
@@ -38,5 +56,10 @@ export function useTicketHistoryViewModel() {
     setStatusFilter,
     searchQuery,
     setSearchQuery,
+    selectedTicketId,
+    selectedTicket,
+    isTicketModalOpen,
+    openTicketModal,
+    closeTicketModal,
   };
 }

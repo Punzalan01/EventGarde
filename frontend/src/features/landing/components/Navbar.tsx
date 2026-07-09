@@ -55,13 +55,13 @@ export function Navbar() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
           className={cn(
-            'flex min-w-max items-center gap-2 text-xl font-extrabold tracking-tight transition-colors duration-500 ease-out sm:gap-3 sm:text-2xl',
+            'flex min-w-max items-center gap-2 text-2xl font-extrabold tracking-tight transition-colors duration-500 ease-out sm:gap-3 sm:text-3xl',
             isScrolled ? 'text-white' : 'text-[#111827]',
           )}
         >
           <span
             className={cn(
-              'flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white p-1 shadow-sm ring-1 transition-colors duration-500 ease-out sm:h-12 sm:w-12',
+              'flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white p-1 shadow-sm ring-1 transition-colors duration-500 ease-out sm:h-14 sm:w-14',
               isScrolled ? 'ring-white/25' : 'ring-gray-100',
             )}
           >

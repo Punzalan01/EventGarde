@@ -1,35 +1,38 @@
 import React from 'react';
 import type { RecommendedEvent } from '../models/personal.model';
 import { motion } from 'framer-motion';
+import { Link, useParams } from 'react-router-dom';
+import { Lock } from 'lucide-react';
 
 export function RecommendedCard({ event, index = 0 }: { event: RecommendedEvent, index?: number }) {
+  const { workspaceId } = useParams<{ workspaceId: string }>();
   const isFree = index % 2 === 1;
 
   return (
-    <article className="flex flex-col min-w-[20rem] md:min-w-0 flex-1 group bg-transparent">
+    <article className="flex flex-col min-w-[20rem] md:min-w-0 flex-1 group bg-zinc-50 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-shadow duration-300 overflow-hidden border border-zinc-200/60">
       {/* Poster Image */}
-      <a href="#" className="block w-full bg-black overflow-hidden relative">
+      <Link to={`/personal/${workspaceId}/discovery/event/${event.id}`} className="block w-full bg-black overflow-hidden relative group/img">
         <img
           src={event.image}
           alt={event.title}
-          className={`w-full aspect-[2/3] object-cover transition-transform duration-500 group-hover:scale-105 ${event.isPrivate ? 'blur-md' : ''}`}
+          className={`w-full aspect-[2/3] object-cover transition-transform duration-500 group-hover/img:scale-105 ${event.isPrivate ? 'blur-md' : ''}`}
           loading="lazy"
           decoding="async"
         />
         {event.isPrivate && (
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm flex flex-col items-center justify-center">
-            <span className="text-white text-xs font-bold uppercase tracking-widest">Private</span>
+            <Lock className="w-8 h-8 text-white mb-2" />
           </div>
         )}
-      </a>
+      </Link>
 
       {/* Details Section */}
-      <div className="flex flex-col mt-4 gap-1.5 flex-grow">
-        <a href="#">
+      <div className="flex flex-col gap-1.5 flex-grow p-5">
+        <Link to={`/personal/${workspaceId}/discovery/event/${event.id}`}>
           <h1 className="text-base sm:text-lg font-black text-[#111827] leading-[1.1] uppercase line-clamp-2">
             {event.title}
           </h1>
-        </a>
+        </Link>
         <p className="text-sm font-medium text-gray-500 truncate">{event.location}</p>
 
         <div className="mt-1">
@@ -39,8 +42,8 @@ export function RecommendedCard({ event, index = 0 }: { event: RecommendedEvent,
         </div>
 
         <div className="mt-4">
-          <button
-            type="button"
+          <Link
+            to={`/personal/${workspaceId}/discovery/event/${event.id}`}
             aria-label={event.isPrivate ? "ENTER CODE" : (isFree ? "GET FREE TICKETS" : "BUY TICKETS")}
             className={`group/btn relative overflow-hidden flex items-center justify-center w-full h-11 text-white font-bold text-sm transition-all hover:scale-[1.02] focus:outline-none focus:ring-4 ${event.isPrivate
                 ? "bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 focus:ring-blue-500/30"
@@ -67,7 +70,7 @@ export function RecommendedCard({ event, index = 0 }: { event: RecommendedEvent,
                 PHP {(parseInt(event.price.replace(/[^0-9]/g, '')) * 50 || ((index + 1) * 350)).toLocaleString()}
               </span>
             )}
-          </button>
+          </Link>
         </div>
       </div>
     </article>

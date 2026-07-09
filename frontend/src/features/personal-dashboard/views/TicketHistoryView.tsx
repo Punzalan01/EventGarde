@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/table';
 import { BackgroundGradientPurple } from '@/components/ui/background-gradient-snippet';
 import { useTicketHistoryViewModel } from '@/features/tickets/viewmodels/useTicketHistoryViewModel';
+import { TicketDetailModal } from '../components/TicketDetailModal';
 import { TicketRecord, TicketStatus } from '@/features/tickets/models/ticket.model';
 
 const statusConfig: Record<TicketStatus, { icon: React.ReactNode; className: string }> = {
@@ -38,6 +39,10 @@ export function TicketHistoryView() {
     setStatusFilter,
     searchQuery,
     setSearchQuery,
+    selectedTicket,
+    isTicketModalOpen,
+    openTicketModal,
+    closeTicketModal,
   } = useTicketHistoryViewModel();
 
   return (
@@ -68,7 +73,11 @@ export function TicketHistoryView() {
                 {tickets.map((ticket) => {
                   const status = statusConfig[ticket.status];
                   return (
-                    <TableRow key={ticket.id}>
+                    <TableRow
+                      key={ticket.id}
+                      className="cursor-pointer hover:bg-gray-50 transition-colors"
+                      onClick={() => openTicketModal(ticket.id)}
+                    >
                       <TableCell className="font-mono font-semibold text-[#6E41E2] text-xs">{ticket.ticketNo}</TableCell>
                       <TableCell className="font-semibold text-[#111827] max-w-[200px]">
                         <span className="line-clamp-2">{ticket.event}</span>
@@ -93,6 +102,12 @@ export function TicketHistoryView() {
         </div>
         <p className="mt-4 text-sm text-center text-black pb-4 font-medium">Showing all {tickets.length} ticket records.</p>
       </div>
+
+      <TicketDetailModal
+        isOpen={isTicketModalOpen}
+        onClose={closeTicketModal}
+        ticket={selectedTicket}
+      />
     </div>
   );
 }

@@ -38,7 +38,14 @@ export function Header({ onMenuToggle, isDesktopVisible = true, isMobileOpen = f
       }
     }
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    
+    const handleOpenPricing = () => setShowPricingModal(true);
+    window.addEventListener('open-pricing-modal', handleOpenPricing);
+    
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      window.removeEventListener('open-pricing-modal', handleOpenPricing);
+    };
   }, []);
 
   const handleLogout = async () => {
@@ -81,21 +88,7 @@ export function Header({ onMenuToggle, isDesktopVisible = true, isMobileOpen = f
           >
             <HamburgerMenuIcon className="w-5 h-5" />
           </button>
-          {role === 'personal' ? (
-            <div className="flex min-w-0 items-center gap-3">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#F1F0F4] ring-1 ring-black/5">
-                <img src="/logo.png" alt="EventGarde" className="h-8 w-8 object-contain" />
-              </div>
-              <div className="min-w-0">
-                <h2 className="truncate text-xl font-black leading-none tracking-tight text-[#111827] sm:text-2xl">
-                  EventGarde
-                </h2>
-                <p className="mt-1 truncate text-xs font-semibold text-[#6B7280] sm:text-sm">
-                  Subscription / Free Personal Workspace
-                </p>
-              </div>
-            </div>
-          ) : (
+          {role !== 'personal' && (
             <h2 className="text-[#5833B5] font-bold text-xl hidden sm:block tracking-normal">
               {role === 'organizer' ? 'Organizer Workspace' : role === 'vendor' ? 'Vendor Storefront' : 'Admin'}
             </h2>

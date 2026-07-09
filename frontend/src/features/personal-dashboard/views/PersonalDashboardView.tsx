@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   AlertTriangle,
@@ -37,6 +37,7 @@ import {
 } from '@/components/ui/dialog';
 
 export function PersonalDashboardView() {
+  const { workspaceId } = useParams<{ workspaceId: string }>();
   const {
     activeFeaturedEvent,
     activePendingRsvp,
@@ -179,7 +180,7 @@ export function PersonalDashboardView() {
         <section className="relative overflow-hidden">
           <div className="px-1 flex items-center justify-between">
             <SectionTitle eyebrow="Recommended for you" />
-            <Link to="/personal/discovery" className="text-xs font-bold uppercase tracking-wide text-[#6E41E2] hover:text-[#5833B5] flex items-center gap-1">
+            <Link to="discovery" className="text-xs font-bold uppercase tracking-wide text-[#6E41E2] hover:text-[#5833B5] flex items-center gap-1">
               View All Events
               <ArrowRight className="h-4 w-4" />
             </Link>
@@ -253,8 +254,8 @@ export function PersonalDashboardView() {
                   const statusColor = isLimited ? 'bg-red-600/90' : 'bg-[#15b292]/90';
 
                   return (
-                    <div className="relative h-full w-full bg-[#111827]">
-                      <img src={item.imageSrc} alt={item.title} className="absolute inset-0 h-full w-full object-cover" />
+                    <Link to={`/personal/${workspaceId}/discovery/event/${item.id}`} className="relative h-full w-full bg-[#111827] block overflow-hidden rounded-3xl">
+                      <img src={item.imageSrc} alt={item.title} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 hover:scale-105" />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#050510]/90 via-[#111827]/40 to-transparent pointer-events-none" />
 
                       <div className={`absolute top-6 right-6 ${statusColor} backdrop-blur-sm text-white text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-sm shadow-md`}>
@@ -273,7 +274,7 @@ export function PersonalDashboardView() {
                           {item.capacity && <span>{item.capacity.toLocaleString()} Capacity</span>}
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   );
                 }}
               />
@@ -301,7 +302,7 @@ export function PersonalDashboardView() {
                           <p className="text-sm text-gray-500">{rsvp.host} • {rsvp.date.split(',')[0]}</p>
                         </div>
                       </div>
-                      <Link to="rsvp" className="text-[#6E41E2] font-semibold text-sm">
+                      <Link to={`rsvp?mailId=${rsvp.id}`} className="text-[#6E41E2] font-semibold text-sm">
                         View
                       </Link>
                     </div>

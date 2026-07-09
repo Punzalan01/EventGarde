@@ -3,6 +3,8 @@ import { NavLink, useParams } from 'react-router-dom';
 import { RoleType, NavigationConfig } from './navigation.config';
 import { X } from 'lucide-react';
 
+import { GradientButton } from '@/shared/components/ui/gradient-button';
+
 interface SidebarProps {
   role: RoleType;
   isDesktopVisible: boolean;
@@ -39,14 +41,16 @@ export function Sidebar({ role, isDesktopVisible, isMobileOpen, onMobileClose, o
       >
         <div className="flex flex-col h-full w-64 relative">
           {/* Logo / Brand Area */}
-          <div className="h-16 flex items-center px-4 border-b border-gray-100 justify-between shrink-0">
+          <div className="py-2.5 px-4 border-b border-gray-100 flex items-center justify-between shrink-0 min-h-[4rem]">
             <div className="flex items-center gap-3 overflow-hidden whitespace-nowrap">
-              <div className="w-10 h-10 flex items-center justify-center shrink-0">
-                <img src="/logo.png" alt="EventGarde Logo" className="w-8 h-8 object-contain" />
+              <div className="w-12 h-12 flex items-center justify-center shrink-0">
+                <img src="/logo.png" alt="EventGarde Logo" className="w-10 h-10 object-contain" />
               </div>
-              <span className="font-extrabold text-[#2D3748] text-xl tracking-tight">
-                EventGarde
-              </span>
+              <div className="flex flex-col min-w-0">
+                <span className="font-extrabold text-[#2D3748] text-lg tracking-tight leading-none">
+                  EventGarde
+                </span>
+              </div>
             </div>
             {/* Close buttons */}
             <div className="flex items-center">
@@ -82,10 +86,10 @@ export function Sidebar({ role, isDesktopVisible, isMobileOpen, onMobileClose, o
                   to={finalPath}
                   end={finalPath === `/personal/${workspaceId}` || finalPath === `/organizer/${workspaceId}` || finalPath === `/vendor/${workspaceId}`}
                   className={({ isActive }) => `
-                    flex items-center gap-3 px-3 py-2.5 rounded-md transition-all text-sm relative overflow-hidden
+                    flex items-center gap-3 px-3 py-2.5 rounded-md transition-all text-xs font-bold uppercase tracking-wider relative overflow-hidden
                     ${isActive
-                      ? 'bg-[#F0EBFF]/60 text-[#2D3748] font-bold'
-                      : 'text-[#4B5563] hover:bg-gray-100 hover:text-[#2D3748] font-medium'
+                      ? 'bg-[#F0EBFF]/60 text-[#2D3748]'
+                      : 'text-[#4B5563] hover:bg-gray-100 hover:text-[#2D3748]'
                     }
                   `}
                 >
@@ -95,7 +99,7 @@ export function Sidebar({ role, isDesktopVisible, isMobileOpen, onMobileClose, o
                         <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#6E41E2]" />
                       )}
                       <Icon
-                        className={`w-[18px] h-[18px] shrink-0 ${isActive ? 'text-[#6E41E2]' : 'text-gray-500'}`}
+                        className={`w-5 h-5 shrink-0 ${isActive ? 'text-[#6E41E2]' : 'text-gray-500'}`}
                         strokeWidth={isActive ? 2.5 : 2}
                       />
                       <span className="whitespace-nowrap">{link.label}</span>
@@ -105,6 +109,25 @@ export function Sidebar({ role, isDesktopVisible, isMobileOpen, onMobileClose, o
               );
             })}
           </nav>
+
+          {/* Footer Area */}
+          <div className="p-4 border-t border-gray-100 bg-gray-50 flex flex-col items-center gap-3 shrink-0">
+            <div className="text-center">
+              <span className="font-extrabold text-[#6B7280] text-[10px] tracking-wider uppercase">
+                Current Plan
+              </span>
+              <p className="font-extrabold text-[#2D3748] text-sm tracking-tight leading-none uppercase mt-1">
+                Free tier
+              </p>
+            </div>
+            <GradientButton
+              variant="variant"
+              className="h-10 px-4 w-full rounded-md text-xs font-bold shadow-sm"
+              onClick={() => window.dispatchEvent(new CustomEvent('open-pricing-modal'))}
+            >
+              UPGRADE PRO
+            </GradientButton>
+          </div>
         </div>
       </aside>
     </>

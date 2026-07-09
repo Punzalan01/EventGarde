@@ -1,10 +1,10 @@
 import {
   DashboardIcon, CalendarIcon, PersonIcon, GearIcon, ChatBubbleIcon,
   LayersIcon, HomeIcon, MagnifyingGlassIcon,
-  EnvelopeClosedIcon, LockClosedIcon, BookmarkIcon, CubeIcon,
-  IdCardIcon, BarChartIcon
+  EnvelopeClosedIcon, LockClosedIcon, CubeIcon,
+  IdCardIcon, BarChartIcon,
 } from '@radix-ui/react-icons';
-import { Ticket, Wallet } from 'lucide-react';
+import { Ticket } from 'lucide-react';
 
 export type RoleType = 'organizer' | 'personal' | 'vendor' | 'admin';
 
@@ -29,10 +29,10 @@ export const NavigationConfig: Record<RoleType, NavItem[]> = {
   personal: [
     { label: 'Dashboard', path: '/personal', icon: HomeIcon },
     { label: 'Discover', path: '/personal/discovery', icon: MagnifyingGlassIcon },
-    { label: 'Ticket History', path: '/personal/tickets', icon: Ticket },
-    { label: 'RSVPs', path: '/personal/rsvp', icon: EnvelopeClosedIcon },
-    { label: 'Saved', path: '/personal/saved', icon: BookmarkIcon },
-    { label: 'Wallet', path: '/personal/wallet', icon: Wallet },
+    { label: 'My Tickets', path: '/personal/tickets', icon: Ticket },
+    { label: 'Pending RSVPs', path: '/personal/rsvp', icon: EnvelopeClosedIcon },
+    { label: 'Marketplace', path: '/personal/vendors', icon: CubeIcon },
+    { label: 'Verified Contacts', path: '/personal/profile', icon: PersonIcon },
   ],
   vendor: [
     { label: 'Dashboard', path: '/vendor', icon: DashboardIcon },

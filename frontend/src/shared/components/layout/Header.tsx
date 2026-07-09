@@ -1,5 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { HamburgerMenuIcon, BellIcon, MagicWandIcon, ChevronDownIcon, ValueIcon, GearIcon, ExitIcon, CheckIcon, LayersIcon, PersonIcon, CubeIcon } from '@radix-ui/react-icons';
+import {
+  BellIcon,
+  CheckIcon,
+  ChevronDownIcon,
+  CubeIcon,
+  ExitIcon,
+  GearIcon,
+  HamburgerMenuIcon,
+  LayersIcon,
+  MagnifyingGlassIcon,
+  PersonIcon,
+} from '@radix-ui/react-icons';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/shared/hooks/useAuth';
 import { GradientButton } from '@/shared/components/ui/gradient-button';
@@ -46,42 +57,84 @@ export function Header({ onMenuToggle, isDesktopVisible = true, isMobileOpen = f
     { id: 'vendor', name: 'Vendor Storefront', badge: 'PENDING REVIEW', badgeColor: 'bg-[#FEF3C7] text-[#B45309]', icon: <CubeIcon className="w-4 h-4" /> },
   ];
 
+  const utilityButtonClass = 'flex h-10 w-10 items-center justify-center rounded-full bg-[#F1F0F4] text-[#4B5563] shadow-sm ring-1 ring-black/5 transition hover:bg-[#111827] hover:text-white focus:outline-none focus:ring-4 focus:ring-[#6E41E2]/20';
+
   return (
     <>
-    <header className="sticky top-0 z-30 h-16 border-b backdrop-blur-md border-[#D6BCFA]/40 shadow-[0_4px_20px_rgba(110,65,226,0.08)]">
+    <header className={`sticky top-0 z-30 border-b backdrop-blur-md shadow-[0_4px_20px_rgba(110,65,226,0.08)] ${
+      role === 'personal'
+        ? 'h-20 border-[#111827]/10 bg-white/90'
+        : 'h-16 border-[#D6BCFA]/40'
+    }`}>
 
       {/* Pastel Purple Gradient Background Overlay */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#F3E8FF]/85 via-[#E9D8FD]/85 to-[#D6BCFA]/85"
+        className={`pointer-events-none absolute inset-0 ${
+          role === 'personal'
+            ? 'bg-[linear-gradient(90deg,rgba(255,255,255,0.96),rgba(246,241,255,0.88),rgba(255,255,255,0.96))]'
+            : 'bg-gradient-to-r from-[#F3E8FF]/85 via-[#E9D8FD]/85 to-[#D6BCFA]/85'
+        }`}
       />
 
       {/* Content */}
       <div className="relative z-10 h-full flex items-center justify-between px-4 lg:px-8">
-        <div className="flex items-center gap-4 flex-1">
+        <div className="flex min-w-0 items-center gap-4 flex-1">
           {/* Always show hamburger button */}
           <button
             onClick={onMenuToggle}
-            className="p-2 -ml-2 text-[#5833B5] hover:bg-[#E9D8FD]/50 rounded-lg transition-colors"
+            className={role === 'personal'
+              ? 'flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#111827] text-white shadow-sm transition hover:bg-[#6E41E2] focus:outline-none focus:ring-4 focus:ring-[#6E41E2]/20'
+              : 'p-2 -ml-2 text-[#5833B5] hover:bg-[#E9D8FD]/50 rounded-lg transition-colors'
+            }
+            aria-label="Toggle workspace navigation"
           >
             <HamburgerMenuIcon className="w-5 h-5" />
           </button>
+          {role === 'personal' ? (
+            <div className="flex min-w-0 items-center gap-3">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#F1F0F4] ring-1 ring-black/5">
+                <img src="/logo.png" alt="EventGarde" className="h-8 w-8 object-contain" />
+              </div>
+              <div className="min-w-0">
+                <h2 className="truncate text-xl font-black leading-none tracking-tight text-[#111827] sm:text-2xl">
+                  EventGarde
+                </h2>
+                <p className="mt-1 truncate text-xs font-semibold text-[#6B7280] sm:text-sm">
+                  Subscription / Free Personal Workspace
+                </p>
+              </div>
+            </div>
+          ) : (
+            <h2 className="text-[#5833B5] font-bold text-xl hidden sm:block tracking-normal">
+              {role === 'organizer' ? 'Organizer Workspace' : role === 'vendor' ? 'Vendor Storefront' : 'Admin'}
+            </h2>
+          )}
         </div>
 
-        <div className="flex items-center gap-3 md:gap-6">
+        <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
 
-          {/* Personal Workspace: Upgrade CTA */}
           {role === 'personal' && (
-            <GradientButton
-              className="hidden md:flex items-center justify-center !px-6 !py-2.5 !min-w-fit text-sm"
-              onClick={() => setShowPricingModal(true)}
-            >
-              Upgrade to Pro
-            </GradientButton>
+            <div className="hidden items-center gap-2 sm:flex">
+              <button type="button" className={utilityButtonClass} aria-label="Notifications">
+                <BellIcon className="h-5 w-5" />
+              </button>
+              <button type="button" className={utilityButtonClass} aria-label="Search">
+                <MagnifyingGlassIcon className="h-5 w-5" />
+              </button>
+              <button
+                type="button"
+                className={utilityButtonClass}
+                aria-label="Settings"
+                onClick={() => setIsProfileOpen(!isProfileOpen)}
+              >
+                <GearIcon className="h-5 w-5" />
+              </button>
+            </div>
           )}
 
-          {/* Organizer Workspace: Billing & Subscription */}
-          {role === 'organizer' && (
+          {/* Organizer billing CTA */}
+          {role !== 'personal' && role === 'organizer' && (
             <GradientButton
               className="hidden md:flex items-center justify-center !px-6 !py-2.5 !min-w-fit text-sm"
               onClick={() => setShowPricingModal(true)}
@@ -91,26 +144,41 @@ export function Header({ onMenuToggle, isDesktopVisible = true, isMobileOpen = f
           )}
 
           {/* All Roles: Notifications */}
-          <button className="relative p-2 text-[#5833B5] hover:bg-[#E9D8FD]/50 rounded-full transition-colors">
-            <BellIcon className="w-5 h-5" />
-            <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-[#E9D8FD]"></span>
-          </button>
+          {role !== 'personal' && (
+            <button className="relative p-2 text-[#5833B5] hover:bg-[#E9D8FD]/50 rounded-full transition-colors" aria-label="Notifications">
+              <BellIcon className="w-5 h-5" />
+              <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-[#E9D8FD]"></span>
+            </button>
+          )}
 
           {/* Role-specific Profile Dropdown / Settings */}
           <div className="relative" ref={dropdownRef}>
-            <div
-              className="flex items-center gap-2 cursor-pointer p-1 rounded-full hover:bg-[#E9D8FD]/50 transition-colors"
+            <button
+              type="button"
+              aria-label="Open profile menu"
+              className={role === 'personal'
+                ? 'flex min-w-[10.75rem] shrink-0 cursor-pointer items-center gap-2 rounded-xl bg-[#F1F0F4] py-1 pl-1 pr-3 shadow-sm ring-1 ring-black/5 transition hover:bg-[#E9D8FD]/70'
+                : 'flex items-center gap-2 cursor-pointer p-1 rounded-full hover:bg-[#E9D8FD]/50 transition-colors'
+              }
               onClick={() => setIsProfileOpen(!isProfileOpen)}
             >
-              <div className="w-9 h-9 rounded-full bg-white text-[#6E41E2] flex items-center justify-center font-bold text-sm border-2 border-[#D6BCFA] shadow-sm">
+              <div className={role === 'personal'
+                ? 'flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#5B5057] text-sm font-black text-white shadow-sm'
+                : 'w-9 h-9 rounded-full bg-white text-[#6E41E2] flex items-center justify-center font-bold text-sm border-2 border-[#D6BCFA] shadow-sm'
+              }>
                 {getInitials(profile?.full_name)}
               </div>
               {role === 'personal' ? (
-                <ChevronDownIcon className="w-4 h-4 text-[#5833B5] hidden md:block" />
+                <>
+                  <span className="hidden max-w-[9rem] truncate text-sm font-black text-[#111827] md:inline">
+                    {profile?.full_name || 'Attendee'}
+                  </span>
+                  <ChevronDownIcon className="hidden h-4 w-4 shrink-0 text-[#6B7280] md:block" />
+                </>
               ) : (
                 <GearIcon className="w-4 h-4 text-[#5833B5] hidden md:block" />
               )}
-            </div>
+            </button>
 
             {/* Dropdown Modal */}
             {isProfileOpen && (

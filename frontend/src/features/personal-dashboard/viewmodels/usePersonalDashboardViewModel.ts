@@ -1,65 +1,115 @@
-import { useState, useMemo } from 'react';
-import { getPublicEvents, getDigitalTickets, getTopEvents, getJoinedEvents, getUpcomingEvents } from '../models/personal.model';
-import { useAuth } from '@/shared/hooks/useAuth';
+import { useMemo, useState, type FormEvent } from 'react';
+import {
+  getDigitalTickets,
+  getFeaturedEvents,
+  getPendingRsvps,
+  getPublicEvents,
+  getRecommendedEvents,
+  recommendedCategories,
+  type PendingRsvp,
+  type RecommendedCategoryFilter,
+} from '../models/personal.model';
+
+const RECOMMENDED_PAGE_SIZE = 4;
 
 export function usePersonalDashboardViewModel() {
-  const { defaultWorkspace } = useAuth();
-  const [activeTab, setActiveTab] = useState('discovery');
+  const [featuredIndex, setFeaturedIndex] = useState(0);
+  const [recommendedCategory, setRecommendedCategory] = useState<RecommendedCategoryFilter>('all');
+  const [recommendedPage, setRecommendedPage] = useState(0);
   const [showRsvpGate, setShowRsvpGate] = useState(false);
+  const [selectedRsvp, setSelectedRsvp] = useState<PendingRsvp | null>(null);
   const [otpCode, setOtpCode] = useState('');
-  
-  // Local state to simulate verification request before backend is fully hooked up
-  const [localVerificationPending, setLocalVerificationPending] = useState(false);
-  
+
   const publicEvents = useMemo(() => getPublicEvents(), []);
+  const featuredEvents = useMemo(() => getFeaturedEvents(), []);
+  const recommendedEvents = useMemo(() => getRecommendedEvents(), []);
   const digitalTickets = useMemo(() => getDigitalTickets(), []);
-  const topEvents = useMemo(() => getTopEvents(), []);
-  const joinedEvents = useMemo(() => getJoinedEvents(), []);
-  const upcomingEvents = useMemo(() => getUpcomingEvents(), []);
+  const pendingRsvps = useMemo(() => getPendingRsvps(), []);
 
-  // Scheduling Modal State
-  const [showSchedulingModal, setShowSchedulingModal] = useState(false);
-  const [schedulingEventName, setSchedulingEventName] = useState("");
+  const filteredRecommendedEvents = useMemo(() => {
+    if (recommendedCategory === 'all') return recommendedEvents;
+    return recommendedEvents.filter((event) => event.category === recommendedCategory);
+  }, [recommendedCategory, recommendedEvents]);
 
-  const handleJoinEvent = (eventName: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    setSchedulingEventName(eventName);
-    setShowSchedulingModal(true);
+  const recommendedPageCount = Math.max(1, Math.ceil(filteredRecommendedEvents.length / RECOMMENDED_PAGE_SIZE));
+  const normalizedRecommendedPage = Math.min(recommendedPage, recommendedPageCount - 1);
+  const visibleRecommendedEvents = filteredRecommendedEvents.slice(
+    normalizedRecommendedPage * RECOMMENDED_PAGE_SIZE,
+    normalizedRecommendedPage * RECOMMENDED_PAGE_SIZE + RECOMMENDED_PAGE_SIZE,
+  );
+
+  const activeFeaturedEvent = featuredEvents[featuredIndex] ?? featuredEvents[0];
+  const activePendingRsvp = selectedRsvp ?? pendingRsvps[0] ?? null;
+
+  const setFeaturedSlide = (index: number) => {
+    setFeaturedIndex(index);
   };
 
-  const handleRsvpSubmit = (e: React.FormEvent) => {
+  const handleFeaturedPrevious = () => {
+    setFeaturedIndex((current) => (current === 0 ? featuredEvents.length - 1 : current - 1));
+  };
+
+  const handleFeaturedNext = () => {
+    setFeaturedIndex((current) => (current + 1) % featuredEvents.length);
+  };
+
+  const handleRecommendedCategoryChange = (category: RecommendedCategoryFilter) => {
+    setRecommendedCategory(category);
+    setRecommendedPage(0);
+  };
+
+  const handleRecommendedPrevious = () => {
+    setRecommendedPage((current) => (current === 0 ? recommendedPageCount - 1 : current - 1));
+  };
+
+  const handleRecommendedNext = () => {
+    setRecommendedPage((current) => (current + 1) % recommendedPageCount);
+  };
+
+  const openRsvpGate = (rsvp: PendingRsvp) => {
+    setSelectedRsvp(rsvp);
+    setOtpCode('');
+    if (rsvp.status !== 'mismatch') {
+      setShowRsvpGate(true);
+    }
+  };
+
+  const closeRsvpGate = () => {
+    setShowRsvpGate(false);
+  };
+
+  const handleRsvpSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setShowRsvpGate(false);
-    // Logic for verifying OTP
+    setOtpCode('');
   };
-
-  const handleVerifyAccount = () => {
-    // In a real app, this would call an API
-    setLocalVerificationPending(true);
-  };
-
-  const isVerified = defaultWorkspace?.verification_status === 'verified';
-  const isVerificationPending = defaultWorkspace?.verification_status === 'pending' || localVerificationPending;
 
   return {
-    activeTab,
-    setActiveTab,
-    showRsvpGate,
-    setShowRsvpGate,
-    otpCode,
-    setOtpCode,
-    publicEvents,
+    activeFeaturedEvent,
+    activePendingRsvp,
+    closeRsvpGate,
     digitalTickets,
-    topEvents,
-    joinedEvents,
-    upcomingEvents,
-    showSchedulingModal,
-    setShowSchedulingModal,
-    schedulingEventName,
-    handleJoinEvent,
+    featuredEvents,
+    featuredIndex,
+    filteredRecommendedEvents,
+    handleFeaturedNext,
+    handleFeaturedPrevious,
+    handleRecommendedCategoryChange,
+    handleRecommendedNext,
+    handleRecommendedPrevious,
     handleRsvpSubmit,
-    isVerified,
-    isVerificationPending,
-    handleVerifyAccount,
+    normalizedRecommendedPage,
+    openRsvpGate,
+    otpCode,
+    pendingRsvps,
+    publicEvents,
+    recommendedCategories,
+    recommendedCategory,
+    recommendedPageCount,
+    setFeaturedSlide,
+    setOtpCode,
+    setShowRsvpGate,
+    showRsvpGate,
+    visibleRecommendedEvents,
   };
 }

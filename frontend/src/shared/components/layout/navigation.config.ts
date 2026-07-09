@@ -1,8 +1,8 @@
-import { 
-  DashboardIcon, CalendarIcon, PersonIcon, GearIcon, ChatBubbleIcon, 
-  LayersIcon, HomeIcon, MagnifyingGlassIcon, 
-  EnvelopeClosedIcon, LockClosedIcon, BookmarkIcon, CubeIcon, 
-  IdCardIcon, BarChartIcon 
+import {
+  DashboardIcon, CalendarIcon, PersonIcon, GearIcon, ChatBubbleIcon,
+  LayersIcon, HomeIcon, MagnifyingGlassIcon,
+  EnvelopeClosedIcon, LockClosedIcon, CubeIcon,
+  IdCardIcon, BarChartIcon,
 } from '@radix-ui/react-icons';
 import { Ticket } from 'lucide-react';
 
@@ -30,9 +30,9 @@ export const NavigationConfig: Record<RoleType, NavItem[]> = {
     { label: 'Dashboard', path: '/personal', icon: HomeIcon },
     { label: 'Discover', path: '/personal/discovery', icon: MagnifyingGlassIcon },
     { label: 'My Tickets', path: '/personal/tickets', icon: Ticket },
-    { label: 'RSVPs', path: '/personal/rsvp', icon: EnvelopeClosedIcon },
-    { label: 'Saved', path: '/personal/saved', icon: BookmarkIcon },
-    { label: 'Vendors', path: '/personal/vendors', icon: CubeIcon },
+    { label: 'Pending RSVPs', path: '/personal/rsvp', icon: EnvelopeClosedIcon },
+    { label: 'Marketplace', path: '/personal/vendors', icon: CubeIcon },
+    { label: 'Verified Contacts', path: '/personal/profile', icon: PersonIcon },
   ],
   vendor: [
     { label: 'Dashboard', path: '/vendor', icon: DashboardIcon },

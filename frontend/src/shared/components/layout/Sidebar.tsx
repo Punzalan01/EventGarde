@@ -67,7 +67,7 @@ export function Sidebar({ role, isDesktopVisible, isMobileOpen, onMobileClose, o
               if (link.isDivider) {
                 return <div key={`divider-${index}`} className="h-px bg-gray-200 my-3 mx-2" />;
               }
-              
+
               const Icon = link.icon!;
               let finalPath = link.path!;
               if (workspaceId) {
@@ -94,9 +94,9 @@ export function Sidebar({ role, isDesktopVisible, isMobileOpen, onMobileClose, o
                       {isActive && (
                         <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#6E41E2]" />
                       )}
-                      <Icon 
-                        className={`w-[18px] h-[18px] shrink-0 ${isActive ? 'text-[#6E41E2]' : 'text-gray-500'}`} 
-                        strokeWidth={isActive ? 2.5 : 2} 
+                      <Icon
+                        className={`w-[18px] h-[18px] shrink-0 ${isActive ? 'text-[#6E41E2]' : 'text-gray-500'}`}
+                        strokeWidth={isActive ? 2.5 : 2}
                       />
                       <span className="whitespace-nowrap">{link.label}</span>
                     </>

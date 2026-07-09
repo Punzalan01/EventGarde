@@ -1,10 +1,11 @@
-import { useMemo, useState, type FormEvent } from 'react';
+import { useMemo, useState, useEffect, type FormEvent } from 'react';
 import {
   getDigitalTickets,
   getFeaturedEvents,
   getPendingRsvps,
   getPublicEvents,
   getRecommendedEvents,
+  getUpcomingEvents,
   recommendedCategories,
   type PendingRsvp,
   type RecommendedCategoryFilter,
@@ -25,6 +26,7 @@ export function usePersonalDashboardViewModel() {
   const recommendedEvents = useMemo(() => getRecommendedEvents(), []);
   const digitalTickets = useMemo(() => getDigitalTickets(), []);
   const pendingRsvps = useMemo(() => getPendingRsvps(), []);
+  const upcomingEvents = useMemo(() => getUpcomingEvents(), []);
 
   const filteredRecommendedEvents = useMemo(() => {
     if (recommendedCategory === 'all') return recommendedEvents;
@@ -40,6 +42,13 @@ export function usePersonalDashboardViewModel() {
 
   const activeFeaturedEvent = featuredEvents[featuredIndex] ?? featuredEvents[0];
   const activePendingRsvp = selectedRsvp ?? pendingRsvps[0] ?? null;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFeaturedIndex((current) => (current + 1) % featuredEvents.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [featuredEvents.length]);
 
   const setFeaturedSlide = (index: number) => {
     setFeaturedIndex(index);
@@ -110,6 +119,7 @@ export function usePersonalDashboardViewModel() {
     setOtpCode,
     setShowRsvpGate,
     showRsvpGate,
+    upcomingEvents,
     visibleRecommendedEvents,
   };
 }

@@ -1,231 +1,225 @@
 import React from 'react';
 import { useDiscoverViewModel } from '../viewmodels/useDiscoverViewModel';
 import { DiscoverEvent } from '../models/DiscoverEvent';
-import { CardStack } from '@/components/ui/card-stack';
-import { BookmarkIconButton } from '@/components/ui/bookmark-icon-button';
-import { BackgroundGradientLight } from '@/components/ui/background-gradient-snippet';
-import { Lock, MapPin, Calendar, Users, Search, SlidersHorizontal } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-export function DiscoverView() {
-  const { allEvents, featuredEvents } = useDiscoverViewModel();
-  const [searchQuery, setSearchQuery] = React.useState('');
-  const [activeCategory, setActiveCategory] = React.useState('All');
+// Inline SectionTitle to avoid cross-feature dependency issues if not needed
+function SectionTitle({ eyebrow }: { eyebrow: string }) {
+  return (
+    <h2 className="text-xl font-black uppercase leading-tight tracking-wider text-[#111827] md:text-3xl">
+      {eyebrow}
+    </h2>
+  );
+}
 
-  const categories = ['All', 'Technology', 'Design', 'Entertainment', 'Wellness', 'Business', 'Food & Culture', 'Gaming', 'Networking'];
-
-  const filteredEvents = allEvents.filter((event) => {
-    const matchesSearch =
-      event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (event.description?.toLowerCase().includes(searchQuery.toLowerCase()) ?? false);
-    const matchesCategory = activeCategory === 'All' || event.category === activeCategory;
-    return matchesSearch && matchesCategory;
-  });
+// Mimicking the RecommendedCard UI from the dashboard
+function DiscoverCard({ event, index = 0 }: { event: DiscoverEvent; index?: number }) {
+  const isFree = index % 2 === 1; // Just for visual variance
 
   return (
-    <div className="min-h-screen font-sans text-[#4B5563] relative overflow-hidden will-change-transform" style={{ contain: 'paint' }}>
-      <BackgroundGradientLight />
+    <article className="flex flex-col min-w-[20rem] md:min-w-0 flex-1 shrink-0 group/card bg-transparent">
+      {/* Poster Image */}
+      <a href="#" className="block w-full bg-black overflow-hidden relative">
+        <img
+          src={event.imageSrc}
+          alt={event.title}
+          className={`w-full aspect-[2/3] object-cover transition-transform duration-500 group-hover/card:scale-105 ${event.isPrivate ? 'blur-md' : ''}`}
+          loading="lazy"
+          decoding="async"
+        />
+        {event.isPrivate && (
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm flex flex-col items-center justify-center">
+            <span className="text-white text-xs font-bold uppercase tracking-widest">Private</span>
+          </div>
+        )}
+      </a>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-8 space-y-10">
-
-        {/* Page Header */}
-        <div className="text-center max-w-3xl mx-auto">
-          <h1 className="text-[#111827] font-extrabold tracking-tight leading-[1.1] text-4xl md:text-5xl mb-4">
-            Discover Events
+      {/* Details Section */}
+      <div className="flex flex-col mt-4 gap-1.5 flex-grow">
+        <a href="#">
+          <h1 className="text-base sm:text-lg font-black text-[#111827] leading-[1.1] uppercase line-clamp-2">
+            {event.title}
           </h1>
-          <p className="text-gray-500 text-base md:text-lg max-w-2xl mx-auto">
-            Explore public events you can join, RSVP to, or save for later. Private events require an access code.
-          </p>
+        </a>
+        <p className="text-sm font-medium text-gray-500 truncate">{event.location}</p>
+
+        <div className="mt-auto pt-2">
+          <span className="inline-flex bg-[#1C73A6] text-white text-[0.7rem] font-bold px-3 py-1 uppercase tracking-wider rounded-sm">
+            {event.date}
+          </span>
         </div>
 
-        {/* Featured Events Card Stack */}
-        <div className="w-full">
-          <h2 className="text-[#111827] font-bold text-2xl tracking-tight mb-2 text-center">Featured Events</h2>
-          <p className="text-gray-500 text-sm text-center mb-6">Swipe or click to explore trending public events</p>
-          <CardStack<DiscoverEvent>
-            items={featuredEvents}
-            initialIndex={0}
-            autoAdvance
-            intervalMs={3000}
-            pauseOnHover
-            showDots
-            cardWidth={560}
-            cardHeight={340}
-            renderCard={(item, { active }) => (
-              <div className="relative h-full w-full">
-                <div className="absolute inset-0">
-                  <img
-                    src={item.imageSrc}
-                    alt={item.title}
-                    className="h-full w-full object-cover"
-                    draggable={false}
-                    loading="eager"
-                  />
-                </div>
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                <div className="absolute top-4 right-4 z-20">
-                  <BookmarkIconButton />
-                </div>
-                {item.category && (
-                  <div className="absolute top-4 left-4 z-20">
-                    <span className="px-3 py-1 rounded-full bg-[#6E41E2] text-white text-xs font-bold uppercase tracking-wider">
-                      {item.category}
-                    </span>
-                  </div>
-                )}
-                <div className="relative z-10 flex h-full flex-col justify-end p-6">
-                  <div className="text-xl font-bold text-white truncate">{item.title}</div>
-                  {item.description && (
-                    <div className="mt-1.5 line-clamp-2 text-sm text-white/80">{item.description}</div>
-                  )}
-                  <div className="flex items-center gap-4 mt-3 text-white/70 text-xs">
-                    {item.date && (
-                      <span className="flex items-center gap-1">
-                        <Calendar className="w-3.5 h-3.5" /> {item.date}
-                      </span>
-                    )}
-                    {item.location && (
-                      <span className="flex items-center gap-1">
-                        <MapPin className="w-3.5 h-3.5" /> {item.location}
-                      </span>
-                    )}
-                    {item.attendees && (
-                      <span className="flex items-center gap-1">
-                        <Users className="w-3.5 h-3.5" /> {item.attendees}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </div>
+        <div className="pt-4">
+          <button
+            type="button"
+            className={`group/btn relative overflow-hidden flex items-center justify-center w-full h-11 text-white font-bold text-sm transition-all hover:scale-[1.02] focus:outline-none focus:ring-4 ${event.isPrivate
+                ? "bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 focus:ring-blue-500/30"
+                : isFree
+                  ? "bg-gradient-to-r from-[#15b292] to-[#11987d] hover:from-yellow-400 hover:to-yellow-500 hover:text-black focus:ring-yellow-500/30"
+                  : "bg-gradient-to-r from-red-600 to-red-500 hover:from-yellow-400 hover:to-yellow-500 hover:text-black focus:ring-yellow-500/30"
+              }`}
+            style={{
+              maskImage: 'radial-gradient(circle at 0 0, transparent 6px, black 7px), radial-gradient(circle at 100% 0, transparent 6px, black 7px), radial-gradient(circle at 0 100%, transparent 6px, black 7px), radial-gradient(circle at 100% 100%, transparent 6px, black 7px)',
+              maskSize: '51% 51%',
+              maskRepeat: 'no-repeat',
+              maskPosition: 'top left, top right, bottom left, bottom right',
+              WebkitMaskImage: 'radial-gradient(circle at 0 0, transparent 6px, black 7px), radial-gradient(circle at 100% 0, transparent 6px, black 7px), radial-gradient(circle at 0 100%, transparent 6px, black 7px), radial-gradient(circle at 100% 100%, transparent 6px, black 7px)',
+              WebkitMaskSize: '51% 51%',
+              WebkitMaskRepeat: 'no-repeat',
+              WebkitMaskPosition: 'top left, top right, bottom left, bottom right',
+            }}
+          >
+            <span className={`relative z-10 uppercase tracking-wide ${(!event.isPrivate && !isFree) ? 'group-hover/btn:hidden' : ''}`}>
+              {event.isPrivate ? "ENTER CODE" : (isFree ? "Free" : "Buy Tickets")}
+            </span>
+            {(!event.isPrivate && !isFree) && (
+              <span className="relative z-10 uppercase tracking-wide hidden group-hover/btn:block">
+                PHP {(event.price || ((index + 1) * 350)).toLocaleString()}
+              </span>
             )}
-          />
+          </button>
         </div>
+      </div>
+    </article>
+  );
+}
 
-        {/* Category Filters */}
-        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className={`whitespace-nowrap px-4 py-2 rounded-full text-sm font-semibold transition-all ${activeCategory === cat
-                  ? 'bg-[#6E41E2] text-white shadow-md'
-                  : 'bg-white/80 text-gray-600 border border-gray-200 hover:bg-[#F0EBFF] hover:text-[#6E41E2] hover:border-[#D6BCFA]'
-                }`}
-            >
-              {cat}
-            </button>
+function CategoryRow({ title, events }: { title: string; events: DiscoverEvent[] }) {
+  const scrollContainerRef = React.useRef<HTMLDivElement>(null);
+
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: -300, behavior: 'smooth' });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: 300, behavior: 'smooth' });
+    }
+  };
+
+  if (events.length === 0) return null;
+
+  return (
+    <section className="relative mt-10">
+      <div className="px-1 flex items-center justify-between">
+        <SectionTitle eyebrow={title} />
+      </div>
+
+      <div className="relative mt-4 px-0 md:px-14 group">
+        <button
+          type="button"
+          onClick={scrollLeft}
+          className="absolute left-0 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-[#111827] text-white shadow-xl transition hover:bg-[#6E41E2] md:flex"
+        >
+          <ArrowLeft className="h-5 w-5" />
+        </button>
+
+        <div
+          ref={scrollContainerRef}
+          className="flex gap-4 overflow-x-auto pb-6 pt-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:grid md:grid-cols-4 md:overflow-visible"
+        >
+          {events.map((event, index) => (
+            <DiscoverCard key={event.id} event={event} index={index} />
           ))}
         </div>
 
-        {/* All Events Grid */}
-        <div>
-          <h2 className="text-[#111827] font-bold text-2xl tracking-tight mb-6">
-            All Events
-            <span className="text-gray-400 font-normal text-base ml-2">({filteredEvents.length})</span>
-          </h2>
+        <button
+          type="button"
+          onClick={scrollRight}
+          className="absolute right-0 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-[#111827] text-white shadow-xl transition hover:bg-[#6E41E2] md:flex"
+        >
+          <ArrowRight className="h-5 w-5" />
+        </button>
+      </div>
+      <div className="mt-3 h-px w-full bg-gradient-to-r from-transparent via-[#111827]/25 to-transparent" />
+    </section>
+  );
+}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredEvents.map((event, index) => (
-              <motion.div
-                key={event.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05, duration: 0.4 }}
-                className={`group relative rounded-2xl overflow-hidden border bg-white shadow-sm hover:shadow-lg transition-all duration-300 ${event.isPrivate
-                    ? 'border-gray-300'
-                    : 'border-gray-100 hover:border-[#D6BCFA] hover:-translate-y-1'
-                  }`}
-              >
-                {/* Image */}
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    src={event.imageSrc}
-                    alt={event.title}
-                    className={`h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 ${event.isPrivate ? 'blur-md scale-110' : ''
-                      }`}
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+export function DiscoverView() {
+  const { allEvents } = useDiscoverViewModel();
+  const [selectedCategory, setSelectedCategory] = React.useState<string>('All');
 
-                  {/* Private overlay */}
-                  {event.isPrivate && (
-                    <div className="absolute inset-0 bg-black/40 backdrop-blur-sm flex flex-col items-center justify-center gap-2">
-                      <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
-                        <Lock className="w-6 h-6 text-white" />
-                      </div>
-                      <span className="text-white text-xs font-bold uppercase tracking-widest">Private Event</span>
-                    </div>
-                  )}
+  const allCategories = ['All', 'Technology', 'Design', 'Entertainment', 'Wellness', 'Business', 'Food & Culture', 'Gaming', 'Networking'];
 
-                  {/* Category tag */}
-                  {event.category && !event.isPrivate && (
-                    <div className="absolute top-3 left-3">
-                      <span className="px-2.5 py-1 rounded-full bg-[#6E41E2]/90 text-white text-[10px] font-bold uppercase tracking-wider backdrop-blur-sm">
-                        {event.category}
-                      </span>
-                    </div>
-                  )}
+  // Define the default categories we want to show rows for if 'All' is selected
+  const defaultCategories = ['Technology', 'Design', 'Entertainment', 'Wellness', 'Business', 'Food & Culture', 'Gaming', 'Networking'];
 
-                  {/* Bookmark */}
-                  {!event.isPrivate && (
-                    <div className="absolute top-3 right-3">
-                      <BookmarkIconButton />
-                    </div>
-                  )}
-                </div>
+  const filteredEvents = selectedCategory === 'All'
+    ? []
+    : allEvents.filter(e => e.category === selectedCategory);
 
-                {/* Content */}
-                <div className={`p-5 ${event.isPrivate ? 'opacity-60' : ''}`}>
-                  <h3 className="text-[#111827] font-bold text-lg mb-1 truncate">{event.title}</h3>
-                  <p className="text-gray-500 text-sm line-clamp-2 mb-4">{event.description}</p>
+  return (
+    <div className="min-h-screen bg-[#FBFBFD] text-[#111827] overflow-hidden">
+      {/* Background decoration similar to dashboard */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_12%_10%,rgba(110,65,226,0.17),transparent_30%),radial-gradient(circle_at_88%_18%,rgba(17,24,39,0.10),transparent_30%),linear-gradient(180deg,#FFFFFF_0%,#F5F1FF_52%,#FFFFFF_100%)]"
+      />
 
-                  <div className="flex items-center gap-3 text-xs text-gray-400">
-                    {event.date && (
-                      <span className="flex items-center gap-1">
-                        <Calendar className="w-3.5 h-3.5" /> {event.date}
-                      </span>
-                    )}
-                    {event.location && (
-                      <span className="flex items-center gap-1">
-                        <MapPin className="w-3.5 h-3.5" /> {event.location}
-                      </span>
-                    )}
-                  </div>
-
-                  {event.attendees && !event.isPrivate && (
-                    <div className="mt-3 flex items-center justify-between">
-                      <span className="flex items-center gap-1 text-xs text-gray-400">
-                        <Users className="w-3.5 h-3.5" />
-                        <span className="font-bold text-[#6E41E2]">{event.attendees}</span> attendees
-                      </span>
-                      <button className="text-xs font-bold text-[#6E41E2] hover:text-[#5833B5] transition-colors">
-                        View Details →
-                      </button>
-                    </div>
-                  )}
-
-                  {event.isPrivate && (
-                    <div className="mt-3">
-                      <button className="w-full py-2.5 rounded-xl bg-[#111827] text-white text-sm font-bold hover:bg-black transition-colors flex items-center justify-center gap-2">
-                        <Lock className="w-4 h-4" />
-                        Request Access
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </motion.div>
-            ))}
+      <div className="mx-auto w-full max-w-[100rem] px-4 pb-16 pt-8 sm:px-6 lg:px-8">
+        <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-gray-200/60 pb-6">
+          <div>
+            <h1 className="text-3xl font-black uppercase tracking-tight text-[#111827] sm:text-4xl">
+              Discover Events
+            </h1>
+            <p className="mt-2 text-base font-medium text-gray-500">
+              Explore and find your next unforgettable experience.
+            </p>
           </div>
 
-          {filteredEvents.length === 0 && (
-            <div className="text-center py-20">
-              <Search className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-[#111827] font-bold text-xl mb-2">No events found</h3>
-              <p className="text-gray-400">Try a different search term or filter.</p>
-            </div>
-          )}
+          <div className="flex flex-col gap-1">
+            <label htmlFor="category-select" className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+              Select Category
+            </label>
+            <select
+              id="category-select"
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="h-11 w-full md:w-64 rounded-xl border border-gray-200 bg-white px-4 text-sm font-semibold text-[#111827] shadow-sm focus:border-[#6E41E2] focus:outline-none focus:ring-2 focus:ring-[#6E41E2]/20"
+            >
+              {allCategories.map(cat => (
+                <option key={cat} value={cat}>{cat}</option>
+              ))}
+            </select>
+          </div>
         </div>
 
+        {selectedCategory === 'All' ? (
+          <div className="space-y-2">
+            {defaultCategories.map((category) => {
+              const categoryEvents = allEvents.filter(e => e.category === category);
+              if (categoryEvents.length === 0) return null;
+              return (
+                <CategoryRow
+                  key={category}
+                  title={category}
+                  events={categoryEvents}
+                />
+              );
+            })}
+          </div>
+        ) : (
+          <div>
+            <div className="px-1 flex items-center justify-between mb-6">
+              <SectionTitle eyebrow={`${selectedCategory} Events`} />
+            </div>
+            {filteredEvents.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {filteredEvents.map((event, index) => (
+                  <DiscoverCard key={event.id} event={event} index={index} />
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-20 bg-white/50 rounded-3xl border border-dashed border-gray-300">
+                <p className="text-gray-500 font-semibold">No events found in this category.</p>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

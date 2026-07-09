@@ -11,6 +11,7 @@ export interface DiscoverEvent extends CardStackItem {
   attendees?: string;
   category?: string;
   isPrivate: boolean;
+  price?: number;
   tag?: string;
   ctaLabel?: string;
 }

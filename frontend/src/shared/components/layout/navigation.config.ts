@@ -28,11 +28,10 @@ export const NavigationConfig: Record<RoleType, NavItem[]> = {
   ],
   personal: [
     { label: 'Dashboard', path: '/personal', icon: HomeIcon },
+    { label: 'Ticket History', path: '/personal/tickets', icon: Ticket },
+    { label: 'Mailbox', path: '/personal/rsvp', icon: EnvelopeClosedIcon },
+    { label: 'My Calendar', path: '/personal/calendar', icon: CalendarIcon },
     { label: 'Discover', path: '/personal/discovery', icon: MagnifyingGlassIcon },
-    { label: 'My Tickets', path: '/personal/tickets', icon: Ticket },
-    { label: 'Pending RSVPs', path: '/personal/rsvp', icon: EnvelopeClosedIcon },
-    { label: 'Marketplace', path: '/personal/vendors', icon: CubeIcon },
-    { label: 'Verified Contacts', path: '/personal/profile', icon: PersonIcon },
   ],
   vendor: [
     { label: 'Dashboard', path: '/vendor', icon: DashboardIcon },

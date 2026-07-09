@@ -3,6 +3,7 @@ import { PersonalLayout } from '@/app/layouts/PersonalLayout'
 import { PersonalDashboardView } from '@/features/personal-dashboard/views/PersonalDashboardView'
 import { DiscoverView } from '@/features/discover/views/DiscoverView'
 import { TicketHistoryView } from '@/features/personal-dashboard/views/TicketHistoryView'
+import { PendingRsvpsView } from '@/features/personal-dashboard/views/PendingRsvpsView'
 import { WorkspaceRedirect } from '@/shared/components/layout/WorkspaceRedirect'
 
 export function PersonalRoutes() {
@@ -13,6 +14,7 @@ export function PersonalRoutes() {
         <Route index element={<PersonalDashboardView />} />
         <Route path="discovery" element={<DiscoverView />} />
         <Route path="tickets" element={<TicketHistoryView />} />
+        <Route path="rsvp" element={<PendingRsvpsView />} />
       </Route>
     </>
   )

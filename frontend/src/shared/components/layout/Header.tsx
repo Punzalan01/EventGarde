@@ -52,30 +52,20 @@ export function Header({ onMenuToggle, isDesktopVisible = true, isMobileOpen = f
   };
 
   const roles = [
-    { id: 'personal', name: 'Personal Dashboard', badge: 'FREE TIER', badgeColor: 'bg-[#F3F4F6] text-[#4B5563]', icon: <PersonIcon className="w-4 h-4" /> },
-    { id: 'organizer', name: 'Organizer Workspace', badge: 'VERIFIED BUSINESS', badgeColor: 'bg-[#D1FAE5] text-[#047857]', icon: <LayersIcon className="w-4 h-4" /> },
-    { id: 'vendor', name: 'Vendor Storefront', badge: 'PENDING REVIEW', badgeColor: 'bg-[#FEF3C7] text-[#B45309]', icon: <CubeIcon className="w-4 h-4" /> },
+    { id: 'personal', name: 'Personal Dashboard', icon: <PersonIcon className="w-4 h-4" /> },
+    { id: 'organizer', name: 'Organizer Workspace', icon: <LayersIcon className="w-4 h-4" /> },
+    { id: 'vendor', name: 'Vendor Storefront', icon: <CubeIcon className="w-4 h-4" /> },
   ];
 
   const utilityButtonClass = 'flex h-10 w-10 items-center justify-center rounded-full bg-[#F1F0F4] text-[#4B5563] shadow-sm ring-1 ring-black/5 transition hover:bg-[#111827] hover:text-white focus:outline-none focus:ring-4 focus:ring-[#6E41E2]/20';
 
   return (
     <>
-    <header className={`sticky top-0 z-30 border-b backdrop-blur-md shadow-[0_4px_20px_rgba(110,65,226,0.08)] ${
+    <header className={`sticky top-0 z-30 border-b backdrop-blur-xl shadow-sm ${
       role === 'personal'
-        ? 'h-20 border-[#111827]/10 bg-white/90'
-        : 'h-16 border-[#D6BCFA]/40'
+        ? 'h-20 border-gray-200/50 bg-[#F3F4F6]/60'
+        : 'h-16 border-[#D6BCFA]/40 bg-white/40'
     }`}>
-
-      {/* Pastel Purple Gradient Background Overlay */}
-      <div
-        aria-hidden="true"
-        className={`pointer-events-none absolute inset-0 ${
-          role === 'personal'
-            ? 'bg-[linear-gradient(90deg,rgba(255,255,255,0.96),rgba(246,241,255,0.88),rgba(255,255,255,0.96))]'
-            : 'bg-gradient-to-r from-[#F3E8FF]/85 via-[#E9D8FD]/85 to-[#D6BCFA]/85'
-        }`}
-      />
 
       {/* Content */}
       <div className="relative z-10 h-full flex items-center justify-between px-4 lg:px-8">
@@ -224,9 +214,6 @@ export function Header({ onMenuToggle, isDesktopVisible = true, isMobileOpen = f
                             </span>
                             {role === r.id && <CheckIcon className="w-4 h-4 text-[#6E41E2] shrink-0" />}
                           </div>
-                          <span className={`mt-1 inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold tracking-wide uppercase ${r.badgeColor}`}>
-                            {r.badge}
-                          </span>
                         </div>
                       </button>
                     ))}

@@ -46,7 +46,7 @@ export function RecommendedCard({ event, index = 0 }: { event: RecommendedEvent,
             to={`/personal/${workspaceId}/discovery/event/${event.id}`}
             aria-label={event.isPrivate ? "ENTER CODE" : (isFree ? "GET FREE TICKETS" : "BUY TICKETS")}
             className={`group/btn relative overflow-hidden flex items-center justify-center w-full h-11 text-white font-bold text-sm transition-all hover:scale-[1.02] focus:outline-none focus:ring-4 ${event.isPrivate
-              ? "bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 focus:ring-blue-500/30"
+              ? "bg-gradient-to-r from-blue-600 to-blue-500 hover:from-black hover:to-black hover:text-white focus:ring-black/30"
               : isFree
                 ? "bg-gradient-to-r from-[#15b292] to-[#11987d] hover:from-yellow-400 hover:to-yellow-500 hover:text-black focus:ring-yellow-500/30"
                 : "bg-gradient-to-r from-red-600 to-red-500 hover:from-yellow-400 hover:to-yellow-500 hover:text-black focus:ring-yellow-500/30"
@@ -62,14 +62,12 @@ export function RecommendedCard({ event, index = 0 }: { event: RecommendedEvent,
               WebkitMaskPosition: 'top left, top right, bottom left, bottom right',
             }}
           >
-            <span className={`relative z-10 uppercase tracking-wide ${(!event.isPrivate && !isFree) ? 'group-hover/btn:hidden' : ''}`}>
+            <span className="relative z-10 uppercase tracking-wide group-hover/btn:hidden">
               {event.isPrivate ? "ENTER CODE" : (isFree ? "Free" : "Buy Tickets")}
             </span>
-            {(!event.isPrivate && !isFree) && (
-              <span className="relative z-10 uppercase tracking-wide hidden group-hover/btn:block">
-                PHP {(parseInt(event.price.replace(/[^0-9]/g, '')) * 50 || ((index + 1) * 350)).toLocaleString()}
-              </span>
-            )}
+            <span className="relative z-10 uppercase tracking-wide hidden group-hover/btn:block">
+              {Math.max(1, 50 - (index * 5))} Tickets Left
+            </span>
           </Link>
         </div>
       </div>
